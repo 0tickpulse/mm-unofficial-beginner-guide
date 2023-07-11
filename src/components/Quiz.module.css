@@ -1,0 +1,26 @@
+.quiz {
+    background: var(--ifm-color-background);
+    border: 1px solid var(--ifm-color-emphasis-300);
+    border-radius: 0.5rem;
+    padding: 1rem;
+}
+
+.quizButton {
+    /* remove all button styles, just an outline */
+    background: none;
+    border: 1px solid transparent;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    border-radius: 0.25rem;
+    text-align: left;
+}
+
+.quizButton:hover {
+    background: var(--ifm-menu-color-background-active);
+}
+
+.quizButtons {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}

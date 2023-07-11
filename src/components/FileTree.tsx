@@ -13,6 +13,7 @@ export type FileTreeProps = {
      * It is an array of objects, each object representing a file or a folder.
      */
     fileTree: FileTree[];
+    title?: string;
 };
 
 /**
@@ -22,12 +23,15 @@ export type FileTreeProps = {
  *
  * Folders are foldable.
  */
-export default function FileTree({ fileTree }: FileTreeProps) {
+export default function FileTree({ fileTree, title }: FileTreeProps) {
     return (
-        <div>
-            {fileTree.map((fileOrFolder) => (
-                <FileTreeItem key={fileOrFolder.name} fileOrFolder={fileOrFolder} />
-            ))}
+        <div className="card">
+            {title && <div className="card__header">{title}</div>}
+            <div className="card__body">
+                {fileTree.map((fileOrFolder) => (
+                    <FileTreeItem key={fileOrFolder.name} fileOrFolder={fileOrFolder} />
+                ))}
+            </div>
         </div>
     );
 }

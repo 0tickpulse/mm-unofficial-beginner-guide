@@ -15,4 +15,4 @@ This guide is not a comprehensive list of mechanics/conditions etc. Instead, it 
 
 If you're a total beginner, start with [Background Information](Background%20Information). It will teach you what Mythic is, and what it's capable of. Then, go through the list of pages from up to down in the sidebar on the left.
 
-If you have previous experience in server development, already have a server, and just want to learn about Mythic, skip straight to [Your first mob](Getting-Started/Your-first-mob).
+If you have previous experience in server development, already have a server, and just want to learn about Mythic, skip straight to [Your first mob](Getting%20Started/Your%20First%20Mob).

@@ -65,7 +65,7 @@ const config = {
                 title: "MM Unofficial Guide",
                 logo: {
                     alt: "MM Unofficial Guide Logo",
-                    src: "img/mythicicon.png",
+                    src: "img/mythicIcon.png",
                 },
                 items: [
                     {

@@ -11,7 +11,7 @@ const config = {
     favicon: "img/favicon.ico",
 
     // Set the production url of your site here
-    url: "https://your-docusaurus-test-site.com",
+    url: "https://0tickpulse.github.io/mm-unofficial-beginner-guide/",
     // Set the /<baseUrl>/ pathname under which your site is served
     // For GitHub pages deployment, it is often '/<projectName>/'
     baseUrl: "/",
@@ -46,7 +46,7 @@ const config = {
 
                     // Please change this to your repo.
                     // Remove this to remove the "edit this page" links.
-                    editUrl: "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/",
+                    editUrl: "https://github.com/0tickpulse/mm-unofficial-beginner-guide/edit/master/",
                 },
                 blog: false,
                 theme: {

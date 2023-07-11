@@ -20,6 +20,7 @@ const config = {
     // If you aren't using GitHub pages, you don't need these.
     organizationName: "0tickpulse", // Usually your GitHub org/user name.
     projectName: "mm-unofficial-beginner-guide", // Usually your repo name.
+    trailingSlash: false,
 
     onBrokenLinks: "throw",
     onBrokenMarkdownLinks: "warn",

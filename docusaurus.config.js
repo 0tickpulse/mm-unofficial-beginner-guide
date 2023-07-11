@@ -1,8 +1,8 @@
 // @ts-check
 // Note: type annotations allow type checking and IDEs autocompletion
 
-const lightCodeTheme = require("prism-react-renderer/themes/github");
-const darkCodeTheme = require("prism-react-renderer/themes/dracula");
+const lightCodeTheme = require("prism-react-renderer/themes/vsDark");
+const darkCodeTheme = require("prism-react-renderer/themes/vsDark");
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
@@ -39,16 +39,15 @@ const config = {
             ({
                 docs: {
                     sidebarPath: require.resolve("./sidebars.js"),
+                    // make the route `/` instead of `/docs/intro`
+                    routeBasePath: "/",
+                    // make `/` point to `/intro`
+
                     // Please change this to your repo.
                     // Remove this to remove the "edit this page" links.
                     editUrl: "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/",
                 },
-                blog: {
-                    showReadingTime: true,
-                    // Please change this to your repo.
-                    // Remove this to remove the "edit this page" links.
-                    editUrl: "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/",
-                },
+                blog: false,
                 theme: {
                     customCss: require.resolve("./src/css/custom.css"),
                 },
@@ -69,7 +68,7 @@ const config = {
                 },
                 items: [
                     {
-                        href: "https://github.com/facebook/docusaurus",
+                        href: "https://github.com/0tickpulse/mm-unofficial-beginner-guide",
                         label: "GitHub",
                         position: "right",
                     },
@@ -79,28 +78,11 @@ const config = {
                 style: "dark",
                 links: [
                     {
-                        title: "Docs",
-                        items: [
-                            {
-                                label: "Tutorial",
-                                to: "/docs/intro",
-                            },
-                        ],
-                    },
-                    {
                         title: "Community",
                         items: [
                             {
-                                label: "Stack Overflow",
-                                href: "https://stackoverflow.com/questions/tagged/docusaurus",
-                            },
-                            {
                                 label: "Discord",
-                                href: "https://discordapp.com/invite/docusaurus",
-                            },
-                            {
-                                label: "Twitter",
-                                href: "https://twitter.com/docusaurus",
+                                href: "http://www.mythicmobs.net/discord",
                             },
                         ],
                     },
@@ -108,17 +90,17 @@ const config = {
                         title: "More",
                         items: [
                             {
-                                label: "Blog",
-                                to: "/blog",
+                                label: "Official Wiki",
+                                href: "https://git.mythiccraft.io/mythiccraft/MythicMobs/-/wikis/home",
                             },
                             {
-                                label: "GitHub",
-                                href: "https://github.com/facebook/docusaurus",
+                                label: "Official Website",
+                                href: "http://www.mythicmobs.net",
                             },
                         ],
                     },
                 ],
-                copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
+                copyright: `This project is licensed under the MIT License. Built with Docusaurus.`,
             },
             prism: {
                 theme: lightCodeTheme,

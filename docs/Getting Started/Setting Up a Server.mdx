@@ -1,0 +1,154 @@
+---
+sidebar_position: 1
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+# Setting Up a Server
+
+In order to learn Mythic, you will need a server to test everything on. This page will teach you how to set up a server that is hosted on your own computer.
+
+## `localhost` servers
+
+When you connect to a server, you join using an IP address, a unique identifier for every computer on the internet. `localhost` is simply a special IP that refers to your own computer. In Minecraft, you can connect to a server by typing in `localhost` as the server address to connect to your own server.
+
+Localhost servers are great for testing things out but are unsuitable for public use. To make your server public, you will need to portforward. Portforwarding is not covered in this guide, but here is another [guide](https://www.noip.com/support/knowledgebase/general-port-forwarding-guide/) that you can follow.
+
+## Setting up a server
+
+### Downloading Java
+
+In order to run a Minecraft server, you will need to download Java. However, most machines already have Java installed. You can check if you have Java installed by running:
+
+```bash
+java -version
+```
+
+If you see something like this:
+
+```bash
+openjdk version "16.0.1" 2021-04-20
+OpenJDK Runtime Environment (build 16.0.1+9-24)
+OpenJDK 64-Bit Server VM (build 16.0.1+9-24, mixed mode, sharing)
+```
+
+:::caution
+
+Make sure that the version of Java you have installed is Java 17. Don't use newer versions of Java.
+
+:::
+
+Then you have Java installed. If you see something like this:
+
+```bash
+bash: java: command not found
+```
+
+Then you do not have Java installed. PaperMC has a [guide](https://docs.papermc.io/misc/java-install) on how to do this.
+
+### Setting up a folder
+
+Create a folder somewhere on your computer (preferably not the Downloads folder as some machines automatically delete files in the Downloads folder after a while) and name it whatever you want. This folder will contain all the files for your server.
+
+### Downloading a server jar
+
+Server jars are the files that contain the internal code for the server. You can download the latest PaperMC server jar [here](https://papermc.io/downloads).
+
+:::info Other server jars
+
+Many other server jars exist, such as Spigot, CraftBukkit, Sponge, etc. However, most of them do not function well.
+
+Lower forks of PaperMC, such as Spigot, lack the functionality and performance of PaperMC which Mythic relies on, and Sponge is a completely different system that is not compatible with Mythic.
+
+Higher forks of PaperMC, such as Purpur and Airplane, work in most cases, but no guarantees can be made. If you encounter any issues, please replicate them on PaperMC before reporting them.
+
+:::
+
+Place the server jar in the folder you created earlier, and rename it to `paper.jar` for convenience.
+
+### Creating a server launch script
+
+To launch your server, you will have to type in a command into the terminal. However, typing in the command every time you want to launch the server is tedious. Instead, you can create a script that will run the command for you.
+
+<Tabs groupId="os">
+<TabItem value="win" label="Windows" default>
+
+Open Notepad and type in the following:
+
+```bash
+java -Xms4096M -Xmx4096M --add-modules=jdk.incubator.vector -XX:+UseG1GC -XX:+ParallelRefProcEnabled -XX:MaxGCPauseMillis=200 -XX:+UnlockExperimentalVMOptions -XX:+DisableExplicitGC -XX:+AlwaysPreTouch -XX:G1HeapWastePercent=5 -XX:G1MixedGCCountTarget=4 -XX:InitiatingHeapOccupancyPercent=15 -XX:G1MixedGCLiveThresholdPercent=90 -XX:G1RSetUpdatingPauseTimePercent=5 -XX:SurvivorRatio=32 -XX:+PerfDisableSharedMem -XX:MaxTenuringThreshold=1 -Dusing.aikars.flags=https://mcflags.emc.gs -Daikars.new.flags=true -XX:G1NewSizePercent=30 -XX:G1MaxNewSizePercent=40 -XX:G1HeapRegionSize=8M -XX:G1ReservePercent=20 -jar server.jar --nogui
+```
+
+Save the file as `start.bat` in the folder you created earlier.
+
+</TabItem>
+<TabItem value="unix" label="MacOS/Linux">
+
+Open TextEdit and type in the following:
+
+```bash
+#!/bin/bash
+
+java -Xms4096M -Xmx4096M --add-modules=jdk.incubator.vector -XX:+UseG1GC -XX:+ParallelRefProcEnabled -XX:MaxGCPauseMillis=200 -XX:+UnlockExperimentalVMOptions -XX:+DisableExplicitGC -XX:+AlwaysPreTouch -XX:G1HeapWastePercent=5 -XX:G1MixedGCCountTarget=4 -XX:InitiatingHeapOccupancyPercent=15 -XX:G1MixedGCLiveThresholdPercent=90 -XX:G1RSetUpdatingPauseTimePercent=5 -XX:SurvivorRatio=32 -XX:+PerfDisableSharedMem -XX:MaxTenuringThreshold=1 -Dusing.aikars.flags=https://mcflags.emc.gs -Daikars.new.flags=true -XX:G1NewSizePercent=30 -XX:G1MaxNewSizePercent=40 -XX:G1HeapRegionSize=8M -XX:G1ReservePercent=20 -jar server.jar --nogui
+```
+
+Save the file as `start.sh` in the folder you created earlier.
+
+</TabItem>
+</Tabs>
+
+Don't worry if the command looks intimidating. Just focus on the `-Xms4096M -Xmx4096M` part.
+This tells the server how much RAM to use.
+
+* `-Xms4096M` tells the server to **start** with 4096MB of RAM.
+* `-Xmx4096M` tells the server to use a **maximum** of 4096MB of RAM.
+
+[More on RAM](https://www.gktoday.in/topic/rapid-access-memory-ram/)
+
+If you have a lot of RAM, you can increase the numbers to use more RAM (e.g. `-Xms8G -Xmx8G` for 8GB of RAM).
+2GB of RAM is the minimum recommended amount of RAM to use.
+
+### EULA
+
+Double click on the script you created earlier to launch the server.
+The server should start up and create a bunch of files in the folder you created earlier, including a `eula.txt` file.
+
+The Minecraft EULA is a legal document that you must agree to before you can run a Minecraft server.
+To agree to the EULA, open the `eula.txt` file and change `eula=false` to `eula=true`.
+Here's [more on the Minecraft EULA](https://www.minecraft.net/en-us/eula/).
+
+Now that you have agreed to the EULA, you can run the server again. If everything went well, you should see this message in the terminal:
+
+```bash
+[Server thread/INFO]: Done (x.xxxs)! For help, type "help"
+```
+
+Congratulations! You have successfully set up a server!
+This terminal window is now your server console, which you can use to run commands and view logs.
+
+### Plugins
+
+As explained in [Background Information](/Background%20Information/), plugins are things that change how the server works.
+Plugins are usually distributed as `.jar` files, which you can download from the internet.
+To install a plugin, simply place the `.jar` file in the `plugins` folder in your server folder.
+
+In this case, we will install [Mythic](https://mythiccraft.io/index.php?pages/official-mythicmobs-download/).
+
+Note that every time you install or uninstall a plugin, you will have to restart the server.
+So restart your server again, and this time, connect to it using your Minecraft client.
+
+### Giving yourself OP
+
+OP is a special permission that allows you to do anything on the server.
+It's handy for testing things out, but you should never give OP to anyone else.
+Given that this is a localhost test server, it's fine to give yourself OP so you don't have to manually manage your permissions.
+
+To give yourself OP on your server, go back to the console and type in:
+
+```bash
+op <your username>
+```
+
+Replace `<your username>` with your Minecraft username.
+You can now use any command on the server.

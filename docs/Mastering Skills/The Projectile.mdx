@@ -1,0 +1,131 @@
+# The Projectile
+
+Mythic has a useful mechanic called `projectile`. This allows full control over projectiles in skills, allowing you to create fireballs, beams, waves, and more!
+However, this skill is extremely difficult to master and requires vast knowledge of Mythic's mechanics. This guide will teach you how to use the `projectile` mechanic.
+
+## How projectiles work
+
+Mythic projectiles are simple in concept: they are simply points in space that move.
+By itself, the projectile does nothing, but the user can define behavior for the projectile when it spawns, when it ticks, when it hits something, and when it ends. For instance, a fireball projectile can play a particle effect when it ticks, and deal damage when it hits something.
+
+Confusing? Let's make a projectile. The base projectile is the `projectile` mechanic.
+
+## Creating a projectile
+
+```yml title="/plugins/MythicMobs/Mobs/ProjectileCaster.yml"
+ProjectileCaster:
+  Type: ZOMBIE
+  Health: 100
+  Display: "I cast projectiles"
+  Skills:
+  - skill{skill=CoolProjectileSkill} ~onTimer:100
+```
+
+```yml title="/plugins/MythicMobs/Skills/CoolProjectileSkill.yml"
+CoolProjectileSkill:
+  Skills:
+  - projectile @Target
+```
+
+This is the bare minimum. It fires a projectile at the mob's target. However, if you spawn the mob now, the projectile will do nothing. We will need to add things to the projectile.
+
+## onStartSkill, onTick, onHit, onEndSkill, and more nonsense
+
+Firstly, we will need to add a `onTick` skill attribute. This sets what meta-skill will be run every time the projectile ticks.
+
+```yml
+CoolProjectileSkill:
+  Skills:
+  - projectile{onTick=CoolProjectileSkillTick} @Target
+CoolProjectileSkillTick:
+  Skills:
+  # Will do later
+```
+
+In this example, the projectile will run `CoolProjectileSkillTick` every time the projectile ticks. Usually, people put particle effects in the `onTick`.
+
+```yml
+CoolProjectileSkill:
+  Skills:
+  - projectile{onTick=CoolProjectileSkillTick} @Target
+CoolProjectileSkillTick:
+  Skills:
+  - effect:particles{particle=flame}
+```
+
+But... what targeter do we use? `@Self` will play the particles on the mob, `@Target` will play it on the mob's target, but we need the particle to play at the projectile's location...
+
+Introducing the `@Origin` targeter. This is an incredibly complex targeter, so complex it requires a whole separate guide page on it. For now, just know that when this targeter is used in a meta-skill that is fired due to a projectile, it acts as a targeter that targets the projectile's location.
+
+TL;DR `@Origin` targets the projectile's location if it is run by a projectile.
+
+```yml
+CoolProjectileSkill:
+  Skills:
+  - projectile{onTick=CoolProjectileSkillTick} @Target
+CoolProjectileSkillTick:
+  Skills:
+  - effect:particles{particle=flame} @Origin
+```
+
+Next, we add an `onHit` skill attribute, which denotes what meta-skill is run when the projectile hits something.
+
+```yml
+CoolProjectileSkill:
+  Skills:
+  - projectile{onTick=CoolProjectileSkillTick;onHit=CoolProjectileSkillHit} @Target
+CoolProjectileSkillTick:
+  Skills:
+  - effect:particles{particle=flame} @Origin
+CoolProjectileSkillHit:
+  Skills:
+  - damage{amount=5}
+```
+
+This makes the projectile deal `5` damage to whatever the projectile hits.
+
+You might be saying, this skill is missing a targeter! However, this is a special case: In an `onHit` skill, the meta-skill automatically targets the hit entity. (Mythic magic)
+
+## Hit this and that
+
+There are a lot of other attributes for projectiles. Let's look at the attributes that denote who the projectile hits.
+
+Let's say that we want the projectile to go through blocks. To do this, we add `stopAtBlock=false` to the projectile.
+
+```yml
+CoolProjectileSkill:
+  Skills:
+  - projectile{onTick=CoolProjectileSkillTick;onHit=CoolProjectileSkillHit;stopAtBlock=false} @Target
+CoolProjectileSkillTick:
+  Skills:
+  - effect:particles{particle=flame} @Origin
+CoolProjectileSkillHit:
+  Skills:
+  - damage{amount=5}
+```
+
+By default, projectiles only hit players, but we want the projectile to hit all entities. To do that, we add `hitNonPlayers=true` to the projectile.
+
+```yml
+CoolProjectileSkill:
+  Skills:
+  - projectile{onTick=CoolProjectileSkillTick;onHit=CoolProjectileSkillHit;stopAtBlock=false;hitNonPlayers=true} @Target
+CoolProjectileSkillTick:
+  Skills:
+  - effect:particles{particle=flame} @Origin
+CoolProjectileSkillHit:
+  Skills:
+  - damage{a=5}
+```
+
+## Movement: velocity and gravity
+
+There are also attributes that change how fast the projectile moves. Firstly, there is a `velocity` attribute that changes the velocity of the projectile.
+
+The velocity formula is this:
+
+```math
+\textrm{Blocks per second} = \cfrac{\textrm{velocity attribute on projectile}}{10}
+```
+
+For example, if you set the `velocity` attribute as `50`, it will move 5 blocks per second.

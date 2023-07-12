@@ -249,9 +249,7 @@ orange: 3
 As you can see, indents change what your code means, and are therefore very important.
 VSCode lets you press `Tab` to indent, and `Shift+Tab` to unindent.
 
-### Basic Example
-
-Here is an example of a YAML file:
+### Test Yourself
 
 ```yaml showLineNumbers
 my_name: John
@@ -264,7 +262,17 @@ my_friends:
       age: 19
 ```
 
-Test yourself:
+<div
+    style={{
+        // a grid with 3 columns
+        display: "grid",
+        gridTemplateColumns: "1fr 1fr 1fr",
+        // a gap of 1rem between each column
+        columnGap: "1rem",
+        // a gap of 1rem between each row
+        rowGap: "1rem",
+    }}
+>
 
 <Quiz
     question={
@@ -298,7 +306,7 @@ Test yourself:
 />
 
 <Quiz
-    question="Which line contains a comment?"
+    question="Which line has a comment?"
     answers={["1", "2", "3", "4"]}
     correctAnswer={2}
     explanation={
@@ -308,6 +316,8 @@ Test yourself:
         </>
     }
 />
+
+</div>
 
 ## Syntax Highlighting
 
@@ -342,6 +352,20 @@ my_friends:
 ```
 
 ## Quiz
+
+<div
+    style={{
+        // another grid with 2 columns
+        display: "grid",
+        gridTemplateColumns: "1fr 1fr",
+        // a gap of 1rem between each column
+        columnGap: "1rem",
+        // a gap of 1rem between each row
+        rowGap: "1rem",
+        // overflow
+        overflow: "auto",
+    }}
+>
 
 <Quiz
     question="What is the shortcut to find text in a file in VSCode?"
@@ -383,7 +407,7 @@ my_friends:
     answers={[
         "To make text more visually appealing",
         "To detect and highlight errors within text",
-        "To improve code readability by coloring different parts differently",
+        "To improve readability",
         "To automatically format the code",
     ]}
     correctAnswer={2}
@@ -394,3 +418,5 @@ my_friends:
         </>
     }
 />
+
+</div>

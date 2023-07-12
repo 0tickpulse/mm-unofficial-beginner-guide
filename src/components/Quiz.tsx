@@ -3,7 +3,7 @@ import styles from "./Quiz.module.css";
 
 type QuizProps = {
     question: string;
-    answers: string[];
+    answers: React.ReactNode[];
     correctAnswer: number;
     explanation?: string;
 };
@@ -40,7 +40,7 @@ export default function Quiz({ question: question, answers, correctAnswer, expla
                     if (!state.isSubmitted) {
                         return "button button--outline button--secondary";
                     }
-                    if (state.isCorrect && index === correctAnswer) {
+                    if (index === correctAnswer) {
                         // correct answer
                         return "button button--outline button--success";
                     }
@@ -62,7 +62,11 @@ export default function Quiz({ question: question, answers, correctAnswer, expla
         <div className="card">
             <div className="card__header">
                 <h3>{question}</h3>
-                {state.isSubmitted && explanation !== undefined && (state.isCorrect ? "Correct!" : "Incorrect!") + " " + explanation}
+                {state.isSubmitted && explanation !== undefined && (
+                    <>
+                        {state.isCorrect ? "Correct!" : "Incorrect!"} {explanation}
+                    </>
+                )}
             </div>
             <div className="card__body">
                 <div className={styles.quizButtons}>{renderAnswers()}</div>

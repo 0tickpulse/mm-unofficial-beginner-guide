@@ -115,9 +115,16 @@ TODO: Screenshot
 Formatting is a feature that allows Visual Studio Code to automatically format your code to improve readability.
 For example, given the following code:
 
+<!-- prettier-ignore-start -->
+
 ```yaml
-hello: [a, b, c, d, e]
+hello: [a
+   b,
+        c, d,
+                    e]
 ```
+
+<!-- prettier-ignore-end -->
 
 If you press `Ctrl+Shift+I` (⇧⌥F) to format, Visual Studio Code will automatically format it to:
 
@@ -129,9 +136,12 @@ This makes your code much easier to read.
 
 ## YAML
 
-YAML is mentioned a few times in this guide so far.
-It is a file format that is used for configuration files.
-It's extremely easy to learn, so here are the basics:
+YAML is mentioned a few times in this guide so far, so let's take a look at what it is.
+
+In short, YAML is a file format that is used for configuration files.
+It's extremely human readable and easy to learn.
+Furthermore, if you've used JSON before, you'll find that YAML is very similar to JSON as it is a strict superset of JSON.
+We will explore the basic features of YAML in this section.
 
 ### Comments
 
@@ -142,6 +152,12 @@ In YAML, comments start with a `#` character, and continue until the end of the 
 ```yaml
 # This is a comment
 ```
+
+:::tip Handy shortcut
+
+In VSCode, you can quickly add a comment to your code by pressing `Ctrl+/` (⌘/) to toggle a comment on the current line.
+
+:::
 
 ### Keys and Values
 
@@ -203,14 +219,39 @@ YAML supports a few basic data types:
     key: null # This is a null value
     ```
 
+### Indentation
+
+Indentation is very important in YAML as it is used to represent **nested values**, i.e. values that are inside other values.
+
+For instance:
+
+```yaml
+prices:
+    apple: 1
+    orange: 3
+```
+
+In this example, `apple` and `orange` are nested inside `prices`.
+On the other hand, if we were to write it like this:
+
+```yaml
+prices:
+apple: 1
+orange: 3
+```
+
+`apple` and `orange` would not be nested inside `prices`, and would instead be at the same level as `prices`.
+As you can see, indents change what your code means, and are therefore very important.
+VSCode lets you press `Tab` to indent, and `Shift+Tab` to unindent.
+
 ### Basic Example
 
 Here is an example of a YAML file:
 
-```yaml
-# This is a comment
+```yaml showLineNumbers
 my_name: John
 my_age: 21
+# These are my friends
 my_friends:
     - name: Bob
       age: 20
@@ -228,6 +269,12 @@ Test yourself:
     }
     answers={["John", "21", "Bob", "Alice"]}
     correctAnswer={0}
+    explanation={
+        <>
+            The value is whatever is after the colon (<code>:</code>). In this case, looking at the line <code>my_name: John</code>, the value is{" "}
+            <code>John</code>.
+        </>
+    }
 />
 
 <Quiz
@@ -238,5 +285,107 @@ Test yourself:
     }
     answers={["String", "List", "Number", "Boolean"]}
     correctAnswer={1}
-    explanation="A list is a value that contains multiple values."
+    explanation={
+        <>
+            The value is a list, because it is prefixed with a <code>-</code> character.
+        </>
+    }
+/>
+
+<Quiz
+    question="Which line contains a comment?"
+    answers={["1", "2", "3", "4"]}
+    correctAnswer={2}
+    explanation={
+        <>
+            A comment is a line that starts with a <code>#</code> character. In this case, line 3 starts with a <code>#</code> character, so it is a
+            comment.
+        </>
+    }
+/>
+
+## Syntax Highlighting
+
+Notice how those code blocks have things that are colored differently?
+This is called **Syntax Highlighting** and is one of the many features of a good text editor.
+Syntax Highlighting makes it easier to read code by coloring different parts of the code differently.
+For instance, you probably found it extremely easy to identify the comments in the code blocks.
+To further illustrate this, here is the same code block:
+
+```yaml showLineNumbers
+my_name: John
+my_age: 21
+# These are my friends
+my_friends:
+    - name: Bob
+      age: 20
+    - name: Alice
+      age: 19
+```
+
+And now without any syntax highlighting:
+
+```plaintext showLineNumbers
+my_name: John
+my_age: 21
+# These are my friends
+my_friends:
+    - name: Bob
+      age: 20
+    - name: Alice
+      age: 19
+```
+
+## Quiz
+
+<Quiz
+    question="What is the shortcut to find text in a file in VSCode?"
+    answers={["Ctrl+Shift+P (⇧⌘P)", "Ctrl+Alt+F (⌘⌥F)", "Ctrl+Shift+I (⇧⌥F)", "Ctrl+F (⌘F)"]}
+    correctAnswer={3}
+    explanation={
+        <>
+            The shortcut to find text in a file is <code>Ctrl+F</code> (⌘F). You can remember this by thinking of <code>F</code> as <b>(F)</b>ind.
+        </>
+    }
+/>
+
+<Quiz
+    question="How can you represent a comment in YAML?"
+    answers={[
+        <>
+            Starting with a <code>//</code> symbol
+        </>,
+        <>
+            Starting with a <code>#</code> symbol and ending at the end of the line
+        </>,
+        <>
+            Starting with a <code>&lt;!--</code> symbol and ending with a <code>--&gt;</code> symbol
+        </>,
+        <>
+            Starting with a <code>/*</code> symbol and ending with a <code>*/</code> symbol
+        </>
+    ]}
+    correctAnswer={1}
+    explanation={
+        <>
+            You can represent a comment in YAML by using a <code>#</code> symbol.
+        </>
+    }
+/>
+
+<Quiz
+    question="What is the purpose of Syntax Highlighting in an editor?"
+    answers={[
+        "To make text more visually appealing",
+        "To detect and highlight errors within text",
+        "To improve code readability by coloring different parts differently",
+        "To automatically format the code",
+    ]}
+    correctAnswer={2}
+    explanation={
+        <>
+            Syntax Highlighting makes it easier to read code by coloring different parts of the code differently. It doesn't actually modify any text,
+            so formatting is not within its capabilities.
+        </>
+    }
 />

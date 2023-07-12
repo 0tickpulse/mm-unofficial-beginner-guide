@@ -6,7 +6,6 @@
 }
 
 .quizButton {
-    /* remove all button styles, just an outline */
     background: none;
     border: 1px solid transparent;
     padding-left: 0.5rem;

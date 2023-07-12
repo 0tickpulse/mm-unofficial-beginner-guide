@@ -220,10 +220,23 @@ my_friends:
 
 Test yourself:
 
-<Quiz answers={["John", "21", "Bob", "Alice"]} correctAnswer={0}>
-    What is the value of <code>my_name</code>?
-</Quiz>
+<Quiz
+    question={
+        <>
+            What is the value of <code>my_name</code>?
+        </>
+    }
+    answers={["John", "21", "Bob", "Alice"]}
+    correctAnswer={0}
+/>
 
-<Quiz answers={["String", "List", "Number", "Boolean"]} correctAnswer={1} explanation="A list is a value that contains multiple values.">
-    What data type is <code>my_friends</code>?
-</Quiz>
+<Quiz
+    question={
+        <>
+            What data type is <code>my_friends</code>?
+        </>
+    }
+    answers={["String", "List", "Number", "Boolean"]}
+    correctAnswer={1}
+    explanation="A list is a value that contains multiple values."
+/>

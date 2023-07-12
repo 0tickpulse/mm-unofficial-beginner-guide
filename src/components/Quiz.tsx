@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./Quiz.module.css";
 
 type QuizProps = {
-    children: string;
+    question: string;
     answers: string[];
     correctAnswer: number;
     explanation?: string;
@@ -14,7 +14,7 @@ type QuizState = {
     isCorrect: boolean;
 };
 
-export default function Quiz({ children: question, answers, correctAnswer, explanation }: QuizProps) {
+export default function Quiz({ question: question, answers, correctAnswer, explanation }: QuizProps) {
     const [state, setState] = React.useState<QuizState>({
         selectedAnswer: null,
         isSubmitted: false,
@@ -53,7 +53,7 @@ export default function Quiz({ children: question, answers, correctAnswer, expla
                 onClick={() => handleClick(index)}
                 disabled={state.isSubmitted}
             >
-                <label htmlFor={`answer-${index}`}>{answer}</label>
+                {answer}
             </button>
         ));
     };

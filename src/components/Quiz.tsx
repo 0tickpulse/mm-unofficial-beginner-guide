@@ -14,7 +14,7 @@ type QuizState = {
     isCorrect: boolean;
 };
 
-export default function Quiz({ question: question, answers, correctAnswer, explanation }: QuizProps) {
+export default function Quiz({ question, answers, correctAnswer, explanation }: QuizProps) {
     const [state, setState] = React.useState<QuizState>({
         selectedAnswer: null,
         isSubmitted: false,

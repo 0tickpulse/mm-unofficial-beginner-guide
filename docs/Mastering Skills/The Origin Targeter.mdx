@@ -1,0 +1,56 @@
+# The Origin Targeter
+
+Arguably the most complex Mythic targeter, `@Origin` is a targeter that works differently based on the context it is used in.
+
+## In a [Projectile](./The%20Projectile)
+
+When used in a skill run by a projectile, `@Origin` will target the projectile's location. For instance,
+
+```yml
+Fireball:
+  Skills:
+  - projectile{oT=FireballTick;oH=FireballHit} @Target
+FireballTick:
+  Skills:
+  - effect:particles{p=flame} @Origin
+FireballHit:
+  Skills:
+  - damage{a=12}
+```
+
+Looking at the `FireballTick` skill, you can see that the particles have an `@Origin` targeter.
+This means that the particles will be spawned at the projectile's location.
+
+## With the `origin` Field
+
+<PremiumOnly />
+
+When used in a skill with the `origin` field, `@Origin` will target the location specified in the field. For instance,
+
+```yml
+SomeSkill:
+  Skills:
+  - effect:particles{p=flame;origin=@Forward{f=3}} @Origin
+```
+
+The particles have an `@Origin` targeter, but also have an `origin` field. This means that the particles will be spawned at `@Forward{f=3}`.
+
+This doesn't seem useful right now, but it has a few use cases especially when used with other targeters. For example:
+
+```yml
+SomeSkill:
+  Skills:
+  - effect:particles{p=flame;origin=@Forward{f=3}} @EntitiesNearOrigin{r=3}
+```
+
+This skill will spawn particles at `@Forward{f=3}`, but will only target entities near that location.
+
+Another use case is with the `fromOrigin` field, which allows you to make a mechanic start at the origin. For example:
+
+```yml
+MyProj:
+  Skills:
+  - projectile{fromOrigin=true;origin=@SelfLocation{yOffset=5}} @Target
+```
+
+Now, instead of starting at the caster's location, the projectile will start 5 blocks above the caster's location.

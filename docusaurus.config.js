@@ -4,6 +4,9 @@
 const lightCodeTheme = require("prism-react-renderer/themes/vsDark");
 const darkCodeTheme = require("prism-react-renderer/themes/vsDark");
 
+const math = require("remark-math");
+const katex = require("rehype-katex");
+
 /** @type {import('@docusaurus/types').Config} */
 const config = {
     title: "Mythic Unofficial Beginner Guide",
@@ -32,6 +35,15 @@ const config = {
         defaultLocale: "en",
         locales: ["en"],
     },
+    
+    stylesheets: [
+        {
+            href: "https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/katex.min.css",
+            type: "text/css",
+            integrity: "sha384-MlJdn/WNKDGXveldHDdyRP1R4CTHr3FeuDNfhsLPYrq2t0UBkUdK2jyTnXPEK1NQ",
+            crossorigin: "anonymous",
+        },
+    ],
 
     presets: [
         [
@@ -42,11 +54,12 @@ const config = {
                     sidebarPath: require.resolve("./sidebars.js"),
                     // make the route `/` instead of `/docs/intro`
                     routeBasePath: "/",
-                    // make `/` point to `/intro`
 
                     // Please change this to your repo.
                     // Remove this to remove the "edit this page" links.
                     editUrl: "https://github.com/0tickpulse/mm-unofficial-beginner-guide/edit/main/",
+                    remarkPlugins: [math],
+                    rehypePlugins: [katex],
                 },
                 blog: false,
                 theme: {

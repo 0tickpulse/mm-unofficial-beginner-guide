@@ -4,4 +4,7 @@ module.exports = {
     parser: "@typescript-eslint/parser",
     plugins: ["@typescript-eslint"],
     root: true,
+    rules: {
+        "no-undef": "off", // TS Server is already checking for this
+    }
 };

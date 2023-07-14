@@ -113,6 +113,7 @@ export default function ServerCmdGenerator() {
                             />
                             <label htmlFor="gui">GUI</label>
                         </div>
+                        <small>Enables a GUI control panel.</small>
                         <div>
                             <input
                                 type="checkbox"
@@ -124,17 +125,22 @@ export default function ServerCmdGenerator() {
                             />
                             <label htmlFor="autoRestart">Auto restart</label>
                         </div>
+                        <small>Automatically restarts the server when it crashes/stops.</small>
                     </div>
                 </div>
                 <div>
                     <Tabs groupId="os">
                         <TabItem value="windows" label="Windows">
                             <CodeBlock language="bash">{generateScript(options, "windows")}</CodeBlock>
-                            <p>Save this as <code>start.bat</code>. Next time, you can run it by typing <code>start.bat</code> in the terminal.</p>
+                            <p>
+                                Save this as <code>start.bat</code>. Next time, you can run it by typing <code>start.bat</code> in the terminal.
+                            </p>
                         </TabItem>
                         <TabItem value="unix" label="MacOS/Linux">
                             <CodeBlock language="bash">{generateScript(options, "unix")}</CodeBlock>
-                            <p>Save this as <code>start.sh</code>. Next time, you can run it by typing <code>sh ./start.sh</code> in the terminal.</p>
+                            <p>
+                                Save this as <code>start.sh</code>. Next time, you can run it by typing <code>sh ./start.sh</code> in the terminal.
+                            </p>
                         </TabItem>
                     </Tabs>
                 </div>

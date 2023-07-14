@@ -57,7 +57,9 @@ CoolProjectileSkill:
   - projectile{onTick=CoolProjectileSkillTick} @Target
 CoolProjectileSkillTick:
   Skills:
+  # highlight-start
   - effect:particles{p=flame}
+  # highlight-end
 ```
 
 But... what targeter do we use? `@Self` will play the particles on the mob, `@Target` will play it on the mob's target, but we need the particle to play at the projectile's location...
@@ -68,9 +70,11 @@ Introducing the `@Origin` targeter. This is an incredibly complex targeter, so c
 CoolProjectileSkill:
   Skills:
   - projectile{onTick=CoolProjectileSkillTick} @Target
+# highlight-start
 CoolProjectileSkillTick:
   Skills:
   - effect:particles{p=flame} @Origin
+# highlight-end
 ```
 
 Next, we add an `onHit` skill attribute, which denotes what meta-skill is run when the projectile hits something.
@@ -78,13 +82,17 @@ Next, we add an `onHit` skill attribute, which denotes what meta-skill is run wh
 ```yml
 CoolProjectileSkill:
   Skills:
+  # highlight-start
   - projectile{onTick=CoolProjectileSkillTick;onHit=CoolProjectileSkillHit} @Target
+  # highlight-end
 CoolProjectileSkillTick:
   Skills:
   - effect:particles{p=flame} @Origin
+# highlight-start
 CoolProjectileSkillHit:
   Skills:
   - damage{a=5}
+# highlight-end
 ```
 
 This makes the projectile deal `5` damage to whatever the projectile hits.
@@ -100,7 +108,9 @@ Let's say that we want the projectile to go through blocks. To do this, we add `
 ```yml
 CoolProjectileSkill:
   Skills:
+  # highlight-start
   - projectile{onTick=CoolProjectileSkillTick;onHit=CoolProjectileSkillHit;stopAtBlock=false} @Target
+  # highlight-end
 CoolProjectileSkillTick:
   Skills:
   - effect:particles{p=flame} @Origin
@@ -114,7 +124,9 @@ By default, projectiles only hit players, but we want the projectile to hit all 
 ```yml
 CoolProjectileSkill:
   Skills:
+  # highlight-start
   - projectile{onTick=CoolProjectileSkillTick;onHit=CoolProjectileSkillHit;stopAtBlock=false;hitNonPlayers=true} @Target
+  # highlight-end
 CoolProjectileSkillTick:
   Skills:
   - effect:particles{p=flame} @Origin
@@ -138,7 +150,9 @@ For example, if you set the `velocity` attribute as `50`, it will move 5 blocks 
 ```yml
 CoolProjectileSkill:
   Skills:
-  - projectile{onTick=CoolProjectileSkillTick;onHit=CoolProjectileSkillHit;stopAtBlock=false;hitNonPlayers=true;velocity=50} @Target
+  # highlight-start
+  - projectile{...;velocity=50} @Target
+  # highlight-end
 CoolProjectileSkillTick:
   Skills:
   - effect:particles{p=flame} @Origin

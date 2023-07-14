@@ -61,7 +61,7 @@ export default function ServerCmdGenerator() {
         <div className="card">
             <div className="card__header">
                 <h3>Server Script Creator</h3>
-                Use this tool to generate a script to run your server.
+                Use this tool to generate a script to run your server. Adapted from <a href="https://flags.sh" target="_blank">flags.sh</a>.
             </div>
             <div className="card__body">
                 <div className={styles.flagGenerator}>

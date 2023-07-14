@@ -1,6 +1,6 @@
 import React from "react";
 import { AiOutlineFileText, AiOutlineFolder, AiOutlineFolderOpen } from "react-icons/ai";
-import { BiDownArrow, BiLogoJava, BiRightArrow } from "react-icons/bi";
+import { BiDownArrow, BiLogoJava, BiRightArrow, BiLogoJavascript, BiLogoTypescript } from "react-icons/bi";
 import styles from "./FileTree.module.css";
 
 type FileTree = File | Folder;
@@ -12,6 +12,11 @@ const EXT_MAP: Record<string, React.ReactNode> = {
     ".java": <BiLogoJava className={styles.fileIcon} />,
     ".jar": <BiLogoJava className={styles.fileIcon} />,
     ".class": <BiLogoJava className={styles.fileIcon} />,
+
+    // JS/JSON/TS
+    ".js": <BiLogoJavascript className={styles.fileIcon} />,
+    ".json": <BiLogoJavascript className={styles.fileIcon} />,
+    ".ts": <BiLogoTypescript className={styles.fileIcon} />,
 };
 const EXT_DEFAULT = <AiOutlineFileText className={styles.fileIcon} />;
 

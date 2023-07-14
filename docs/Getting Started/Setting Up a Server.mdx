@@ -129,21 +129,15 @@ The server should start up and create a bunch of files in the folder you created
 
 <FileTree
     fileTree={[
-        { name: "cache", type: "folder", children: [
-            { name: "mojang_1.20.1.jar", type: "file" }
-        ]},
-        { name: "libraries", type: "folder", children: [
-            { name: "...", type: "file" }
-        ] },
-        { name: "logs", type: "folder", children: [
-            { name: "latest.log", type: "file" }
-        ] },
+        { name: "cache", type: "folder", children: [{ name: "mojang_1.20.1.jar", type: "file" }] },
+        { name: "libraries", type: "folder", children: [{ name: "...", type: "file" }] },
+        { name: "logs", type: "folder", children: [{ name: "latest.log", type: "file" }] },
         { name: "plugins", type: "folder", children: [] },
-        { name: "versions", type: "folder", children: [
-            { name: "1.20.1", type: "folder", children: [
-                { name: "paper-1.20.1.jar", type: "file" },
-            ] }
-        ] },
+        {
+            name: "versions",
+            type: "folder",
+            children: [{ name: "1.20.1", type: "folder", children: [{ name: "paper-1.20.1.jar", type: "file" }] }],
+        },
         { name: "eula.txt", type: "file" },
         { name: "server.jar", type: "file" },
         { name: "server.properties", type: "file" },
@@ -161,6 +155,66 @@ Now that you have agreed to the EULA, you can run the server again. If everythin
 ```bash
 [Server thread/INFO]: Done (x.xxxs)! For help, type "help"
 ```
+
+Furthermore, there should be more files in the `plugins` folder:
+
+<FileTree
+    fileTree={[
+        { name: "cache", type: "folder", children: [{ name: "mojang_1.20.1.jar", type: "file" }] },
+        {
+            name: "config",
+            type: "folder",
+            children: [
+                { name: "paper-global.yml", type: "file" },
+                { name: "paper-world-defaults.yml", type: "file" },
+            ],
+        },
+        { name: "libraries", type: "folder", children: [{ name: "...", type: "file" }] },
+        { name: "logs", type: "folder", children: [{ name: "latest.log", type: "file" }] },
+        {
+            name: "plugins",
+            type: "folder",
+            children: [
+                {
+                    name: "bStats",
+                    type: "folder",
+                    children: [
+                        { name: "config.yml", type: "file" },
+                        { name: "bStats.jar", type: "file" },
+                    ],
+                },
+            ],
+        },
+        {
+            name: "versions",
+            type: "folder",
+            children: [{ name: "1.20.1", type: "folder", children: [{ name: "paper-1.20.1.jar", type: "file" }] }],
+        },
+        { name: "world", type: "folder", children: [{ name: "...", type: "file" }] },
+        { name: "world_nether", type: "folder", children: [{ name: "...", type: "file" }] },
+        { name: "world_the_end", type: "folder", children: [{ name: "...", type: "file" }] },
+        { name: "banned-ips.json", type: "file" },
+        { name: "banned-players.json", type: "file" },
+        { name: "bukkit.yml", type: "file" },
+        { name: "commands.yml", type: "file" },
+        { name: "eula.txt", type: "file" },
+        { name: "help.yml", type: "file" },
+        { name: "ops.json", type: "file" },
+        { name: "permissions.yml", type: "file" },
+        { name: "server.jar", type: "file" },
+        { name: "server.properties", type: "file" },
+        { name: "spigot.yml", type: "file" },
+        { name: "usercache.json", type: "file" },
+        { name: "version_history.json", type: "file" },
+        { name: "whitelist.json", type: "file" },
+    ]}
+    title={<h3>Server folder</h3>}
+/>
+
+You can ignore most of these files for now, but the ones you should pay attention to are:
+
+- `server.properties` - This file contains a lot of important settings for your server.
+- `plugins` - This folder contains all the plugins on your server.
 
 Congratulations! You have successfully set up a server!
 This terminal window is now your server console, which you can use to run commands and view logs.

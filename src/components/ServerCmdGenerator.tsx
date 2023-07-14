@@ -132,7 +132,7 @@ export default function ServerCmdGenerator() {
                             <CodeBlock language="bash">{generateScript(options, "windows")}</CodeBlock>
                             <p>Save this as <code>start.bat</code>. Next time, you can run it by typing <code>start.bat</code> in the terminal.</p>
                         </TabItem>
-                        <TabItem value="unix" label="Unix">
+                        <TabItem value="unix" label="MacOS/Linux">
                             <CodeBlock language="bash">{generateScript(options, "unix")}</CodeBlock>
                             <p>Save this as <code>start.sh</code>. Next time, you can run it by typing <code>sh ./start.sh</code> in the terminal.</p>
                         </TabItem>

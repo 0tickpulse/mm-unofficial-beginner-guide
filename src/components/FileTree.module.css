@@ -1,10 +1,13 @@
 .fileTreeItem {
-    /*
-    FileTreeItem is a li.
-    Remove the dot, and instead add a file icon.
-     */
     list-style-type: none;
     padding-left: 1rem;
+}
+
+.highlight {
+    background: var(--ifm-color-emphasis-200);
+    border-radius: 0.25rem;
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
 }
 
 .foldButton {

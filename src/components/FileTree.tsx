@@ -1,18 +1,26 @@
 import React from "react";
 import { AiOutlineFileText, AiOutlineFolder, AiOutlineFolderOpen } from "react-icons/ai";
-import { BiDownArrow, BiLogoJava, BiLogoJavascript, BiLogoTypescript, BiRightArrow } from "react-icons/bi";
+import { BiCoffee, BiDownArrow, BiLogoJavascript, BiLogoTypescript, BiRightArrow } from "react-icons/bi";
 import { VscJson } from "react-icons/vsc";
 import styles from "./FileTree.module.css";
 
 type FileTree = File | Folder;
-type File = { name: string; type: "file" };
-type Folder = { name: string; type: "folder"; children: FileTree[]; defaultOpen?: boolean };
+type File = { name: string; type: "file"; highlight?: boolean };
+type Folder = { name: string; type: "folder"; children?: FileTree[]; defaultOpen?: boolean; highlight?: boolean };
+
+function isFile(fileOrFolder: FileTree): fileOrFolder is File {
+    return fileOrFolder.type === "file";
+}
+
+function isFolder(fileOrFolder: FileTree): fileOrFolder is Folder {
+    return fileOrFolder.type === "folder";
+}
 
 const EXT_MAP: Record<string, React.ReactNode> = {
     // Java
-    ".java": <BiLogoJava className={styles.fileIcon} />,
-    ".jar": <BiLogoJava className={styles.fileIcon} />,
-    ".class": <BiLogoJava className={styles.fileIcon} />,
+    ".java": <BiCoffee className={styles.fileIcon} />,
+    ".jar": <BiCoffee className={styles.fileIcon} />,
+    ".class": <BiCoffee className={styles.fileIcon} />,
 
     // JS/JSON/TS
     ".js": <BiLogoJavascript className={styles.fileIcon} />,
@@ -20,7 +28,7 @@ const EXT_MAP: Record<string, React.ReactNode> = {
     ".ts": <BiLogoTypescript className={styles.fileIcon} />,
 
     // Ellipsis
-    ".": null
+    ".": null,
 };
 const EXT_DEFAULT = <AiOutlineFileText className={styles.fileIcon} />;
 
@@ -31,14 +39,95 @@ function extIconFor(ext: string): React.ReactNode {
     return EXT_DEFAULT;
 }
 
-export type FileTreeProps = {
-    /**
-     * The file tree to display.
-     * It is an array of objects, each object representing a file or a folder.
-     */
-    fileTree: FileTree[];
-    title?: string;
-};
+export type FileTreeProps = (
+    | {
+          /**
+           * The file tree to display.
+           * It is an array of objects, each object representing a file or a folder.
+           */
+          fileTree: FileTree[];
+      }
+    | {
+          /**
+           * The paths to display.
+           * Dynamically generates a file tree from the paths.
+           */
+          paths: string[];
+      }
+) & { title?: string };
+
+function transformPath<T extends FileTree>(path: T): T {
+    const cloned = { ...path };
+
+    const idx = cloned.name.indexOf(":");
+    if (idx !== -1) {
+        let matched = false;
+        const prefix = cloned.name.substring(0, idx);
+        const modes = prefix.split(",");
+        if (modes.includes("highlight")) {
+            cloned.highlight = true;
+            matched = true;
+        }
+        if (modes.includes("defaultOpen") && isFolder(cloned)) {
+            cloned.defaultOpen = true;
+            matched = true;
+        }
+        if (matched) {
+            cloned.name = cloned.name.substring(idx + 1);
+        }
+    }
+
+    return cloned;
+}
+
+function fileTreeFromPaths(paths: string[]): FileTree[] {
+    const root: Folder = {
+        name: "",
+        type: "folder",
+        children: [],
+        defaultOpen: true,
+    };
+
+    const addFileToTree = (file: string, parent: Folder) => {
+        const segments = file.split("/");
+        let currentFolder = parent;
+
+        for (let i = 0; i < segments.length - 1; i++) {
+            const folderName = segments[i];
+            const existingFolder = currentFolder.children.find((child) => isFolder(child) && child.name === folderName) as Folder | undefined;
+
+            if (existingFolder) {
+                currentFolder = existingFolder;
+            } else {
+                const newFolder: Folder = transformPath({
+                    name: folderName,
+                    type: "folder",
+                    children: [],
+                    defaultOpen: false,
+                    highlight: false,
+                });
+                currentFolder.children.push(newFolder);
+                currentFolder = newFolder;
+            }
+        }
+
+        const fileName = segments[segments.length - 1];
+        const newFile: File = transformPath({
+            name: fileName,
+            type: "file",
+        });
+        if (fileName.trim() === "") {
+            return; // ignore empty file names (e.g. trailing slash for folders)
+        }
+        currentFolder.children.push(newFile);
+    };
+
+    paths.forEach((path) => {
+        addFileToTree(path, root);
+    });
+
+    return root.children;
+}
 
 /**
  * A file tree component.
@@ -47,7 +136,9 @@ export type FileTreeProps = {
  *
  * Folders are foldable.
  */
-export default function FileTree({ fileTree, title }: FileTreeProps) {
+export default function FileTree(props: FileTreeProps) {
+    const { title } = props;
+    const fileTree = "fileTree" in props ? props.fileTree : fileTreeFromPaths(props.paths);
     return (
         <div className="card">
             {title && <div className="card__header">{title}</div>}
@@ -65,9 +156,13 @@ type FileTreeItemProps = {
 };
 
 function FileTreeItem({ fileOrFolder }: FileTreeItemProps) {
+    const item = fileOrFolder.type === "file" ? <FileTreeFile file={fileOrFolder} /> : <FileTreeFolder {...fileOrFolder} />;
     return (
         <div className={styles.fileTreeItem}>
-            {fileOrFolder.type === "file" ? <FileTreeFile file={fileOrFolder} /> : <FileTreeFolder {...fileOrFolder} />}
+            {
+                // Highlight the file/folder if it is marked as such
+                fileOrFolder.highlight ? <div className={styles.highlight}>{item}</div> : <div>{item}</div>
+            }
         </div>
     );
 }

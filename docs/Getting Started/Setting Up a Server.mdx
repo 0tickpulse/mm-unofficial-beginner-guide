@@ -128,21 +128,16 @@ Double click on the script you created earlier to launch the server.
 The server should start up and create a bunch of files in the folder you created earlier:
 
 <FileTree
-    fileTree={[
-        { name: "cache", type: "folder", children: [{ name: "mojang_1.20.1.jar", type: "file" }] },
-        { name: "libraries", type: "folder", children: [{ name: "...", type: "file" }] },
-        { name: "logs", type: "folder", children: [{ name: "latest.log", type: "file" }] },
-        { name: "plugins", type: "folder", children: [] },
-        {
-            name: "versions",
-            type: "folder",
-            children: [{ name: "1.20.1", type: "folder", children: [{ name: "paper-1.20.1.jar", type: "file" }] }],
-        },
-        { name: "eula.txt", type: "file" },
-        { name: "server.jar", type: "file" },
-        { name: "server.properties", type: "file" },
+    paths={[
+        "cache/mojang_1.20.1.jar",
+        "libraries/...",
+        "logs/latest.log",
+        "plugins/",
+        "versions/1.20.1/paper-1.20.1.jar",
+        "highlight:eula.txt",
+        "server.jar",
+        "server.properties",
     ]}
-    title={<h3>Server folder</h3>}
 />
 
 The one you want to look out for is `eula.txt`.
@@ -159,55 +154,32 @@ Now that you have agreed to the EULA, you can run the server again. If everythin
 Furthermore, there should be more files in the `plugins` folder:
 
 <FileTree
-    fileTree={[
-        { name: "cache", type: "folder", children: [{ name: "mojang_1.20.1.jar", type: "file" }] },
-        {
-            name: "config",
-            type: "folder",
-            children: [
-                { name: "paper-global.yml", type: "file" },
-                { name: "paper-world-defaults.yml", type: "file" },
-            ],
-        },
-        { name: "libraries", type: "folder", children: [{ name: "...", type: "file" }] },
-        { name: "logs", type: "folder", children: [{ name: "latest.log", type: "file" }] },
-        {
-            name: "plugins",
-            type: "folder",
-            children: [
-                {
-                    name: "bStats",
-                    type: "folder",
-                    children: [
-                        { name: "config.yml", type: "file" },
-                    ],
-                },
-            ],
-        },
-        {
-            name: "versions",
-            type: "folder",
-            children: [{ name: "1.20.1", type: "folder", children: [{ name: "paper-1.20.1.jar", type: "file" }] }],
-        },
-        { name: "world", type: "folder", children: [{ name: "...", type: "file" }] },
-        { name: "world_nether", type: "folder", children: [{ name: "...", type: "file" }] },
-        { name: "world_the_end", type: "folder", children: [{ name: "...", type: "file" }] },
-        { name: "banned-ips.json", type: "file" },
-        { name: "banned-players.json", type: "file" },
-        { name: "bukkit.yml", type: "file" },
-        { name: "commands.yml", type: "file" },
-        { name: "eula.txt", type: "file" },
-        { name: "help.yml", type: "file" },
-        { name: "ops.json", type: "file" },
-        { name: "permissions.yml", type: "file" },
-        { name: "server.jar", type: "file" },
-        { name: "server.properties", type: "file" },
-        { name: "spigot.yml", type: "file" },
-        { name: "usercache.json", type: "file" },
-        { name: "version_history.json", type: "file" },
-        { name: "whitelist.json", type: "file" },
+    paths={[
+        "cache/mojang_1.20.1.jar",
+        "config/paper-global.yml",
+        "config/paper-world-defaults.yml",
+        "libraries/...",
+        "logs/latest.log",
+        "plugins/bStats/config.yml",
+        "versions/1.20.1/paper-1.20.1.jar",
+        "world/...",
+        "world_nether/...",
+        "world_the_end/...",
+        "banned-ips.json",
+        "banned-players.json",
+        "bukkit.yml",
+        "commands.yml",
+        "eula.txt",
+        "help.yml",
+        "ops.json",
+        "permissions.yml",
+        "server.jar",
+        "server.properties",
+        "spigot.yml",
+        "usercache.json",
+        "version_history.json",
+        "whitelist.json",
     ]}
-    title={<h3>Server folder</h3>}
 />
 
 You can ignore most of these files for now, but the ones you should pay attention to are:

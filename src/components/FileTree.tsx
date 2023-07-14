@@ -94,18 +94,18 @@ function fileTreeFromPaths(paths: string[]): FileTree[] {
 
         for (let i = 0; i < segments.length - 1; i++) {
             const folderName = segments[i];
-            const existingFolder = currentFolder.children.find((child) => isFolder(child) && child.name === folderName) as Folder | undefined;
+            const newFolder: Folder = transformPath({
+                name: folderName,
+                type: "folder",
+                children: [],
+                defaultOpen: false,
+                highlight: false,
+            });
+            const existingFolder = currentFolder.children.find((child) => isFolder(child) && child.name === newFolder.name) as Folder | undefined;
 
             if (existingFolder) {
                 currentFolder = existingFolder;
             } else {
-                const newFolder: Folder = transformPath({
-                    name: folderName,
-                    type: "folder",
-                    children: [],
-                    defaultOpen: false,
-                    highlight: false,
-                });
                 currentFolder.children.push(newFolder);
                 currentFolder = newFolder;
             }

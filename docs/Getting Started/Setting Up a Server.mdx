@@ -68,7 +68,7 @@ You might be able to get Mythic to work on these forks but no support will be pr
 
 :::
 
-Place the server jar in the folder you created earlier, and rename it to `paper.jar` for convenience.
+Place the server jar in the folder you created earlier, and rename it to `server.jar` for convenience.
 
 ### Creating a server launch script
 
@@ -84,6 +84,11 @@ java -Xms4096M -Xmx4096M --add-modules=jdk.incubator.vector -XX:+UseG1GC -XX:+Pa
 ```
 
 Save the file as `start.bat` in the folder you created earlier.
+Now, in the terminal, you can run the server by typing in:
+
+```bash
+start.bat
+```
 
 </TabItem>
 <TabItem value="unix" label="MacOS/Linux">
@@ -97,6 +102,11 @@ java -Xms4096M -Xmx4096M --add-modules=jdk.incubator.vector -XX:+UseG1GC -XX:+Pa
 ```
 
 Save the file as `start.sh` in the folder you created earlier.
+Now, in the terminal, you can run the server by typing in:
+
+```bash
+sh ./start.sh
+```
 
 </TabItem>
 </Tabs>
@@ -104,8 +114,8 @@ Save the file as `start.sh` in the folder you created earlier.
 Don't worry if the command looks intimidating. Just focus on the `-Xms4096M -Xmx4096M` part.
 This tells the server how much RAM to use.
 
-* `-Xms4096M` tells the server to **start** with 4096MB of RAM.
-* `-Xmx4096M` tells the server to use a **maximum** of 4096MB of RAM.
+- `-Xms4096M` tells the server to **start** with 4096MB of RAM.
+- `-Xmx4096M` tells the server to use a **maximum** of 4096MB of RAM.
 
 [More on RAM](https://www.gktoday.in/topic/rapid-access-memory-ram/)
 
@@ -115,11 +125,36 @@ If you have a lot of RAM, you can increase the numbers to use more RAM (e.g. `-X
 ### EULA
 
 Double click on the script you created earlier to launch the server.
-The server should start up and create a bunch of files in the folder you created earlier, including a `eula.txt` file.
+The server should start up and create a bunch of files in the folder you created earlier:
 
-The Minecraft EULA is a legal document that you must agree to before you can run a Minecraft server.
+<FileTree
+    fileTree={[
+        { name: "cache", type: "folder", children: [
+            { name: "mojang_1.20.1.jar", type: "file" }
+        ]},
+        { name: "libraries", type: "folder", children: [
+            { name: "...", type: "file" }
+        ] },
+        { name: "logs", type: "folder", children: [
+            { name: "latest.log", type: "file" }
+        ] },
+        { name: "plugins", type: "folder", children: [] },
+        { name: "versions", type: "folder", children: [
+            { name: "1.20.1", type: "folder", children: [
+                { name: "paper-1.20.1.jar", type: "file" },
+            ] }
+        ] },
+        { name: "eula.txt", type: "file" },
+        { name: "server.jar", type: "file" },
+        { name: "server.properties", type: "file" },
+    ]}
+    title={<h3>Server folder</h3>}
+/>
+
+The one you want to look out for is `eula.txt`.
+
+The [Minecraft EULA](https://www.minecraft.net/en-us/eula/) is a legal document that you must agree to before you can run a Minecraft server.
 To agree to the EULA, open the `eula.txt` file and change `eula=false` to `eula=true`.
-Here's [more on the Minecraft EULA](https://www.minecraft.net/en-us/eula/).
 
 Now that you have agreed to the EULA, you can run the server again. If everything went well, you should see this message in the terminal:
 
@@ -155,3 +190,8 @@ op <your username>
 
 Replace `<your username>` with your Minecraft username.
 You can now use any command on the server.
+
+### Conclusion
+
+Congratulations! You have successfully set up a local Minecraft testing server, and you have installed Mythic on it.
+You can now start learning how to use Mythic and create your first mob.

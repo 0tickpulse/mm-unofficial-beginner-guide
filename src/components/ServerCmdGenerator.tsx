@@ -13,7 +13,7 @@ type ServerOptions = {
 
 const OTHER_OPTIONS_DEFAULT: ServerOptions = {
     jarFilename: "server.jar",
-    serverRamGB: 2,
+    serverRamGB: 4,
     gui: false,
     autoRestart: false,
 };

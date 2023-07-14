@@ -74,53 +74,7 @@ Place the server jar in the folder you created earlier, and rename it to `server
 
 To launch your server, you will have to type in a command into the terminal. However, typing in the command every time you want to launch the server is tedious. Instead, you can create a script that will run the command for you.
 
-<Tabs groupId="os">
-<TabItem value="win" label="Windows" default>
-
-Open Notepad and type in the following:
-
-```bash
-java -Xms4096M -Xmx4096M --add-modules=jdk.incubator.vector -XX:+UseG1GC -XX:+ParallelRefProcEnabled -XX:MaxGCPauseMillis=200 -XX:+UnlockExperimentalVMOptions -XX:+DisableExplicitGC -XX:+AlwaysPreTouch -XX:G1HeapWastePercent=5 -XX:G1MixedGCCountTarget=4 -XX:InitiatingHeapOccupancyPercent=15 -XX:G1MixedGCLiveThresholdPercent=90 -XX:G1RSetUpdatingPauseTimePercent=5 -XX:SurvivorRatio=32 -XX:+PerfDisableSharedMem -XX:MaxTenuringThreshold=1 -Dusing.aikars.flags=https://mcflags.emc.gs -Daikars.new.flags=true -XX:G1NewSizePercent=30 -XX:G1MaxNewSizePercent=40 -XX:G1HeapRegionSize=8M -XX:G1ReservePercent=20 -jar server.jar --nogui
-```
-
-Save the file as `start.bat` in the folder you created earlier.
-Now, in the terminal, you can run the server by typing in:
-
-```bash
-start.bat
-```
-
-</TabItem>
-<TabItem value="unix" label="MacOS/Linux">
-
-Open TextEdit and type in the following:
-
-```bash
-#!/bin/bash
-
-java -Xms4096M -Xmx4096M --add-modules=jdk.incubator.vector -XX:+UseG1GC -XX:+ParallelRefProcEnabled -XX:MaxGCPauseMillis=200 -XX:+UnlockExperimentalVMOptions -XX:+DisableExplicitGC -XX:+AlwaysPreTouch -XX:G1HeapWastePercent=5 -XX:G1MixedGCCountTarget=4 -XX:InitiatingHeapOccupancyPercent=15 -XX:G1MixedGCLiveThresholdPercent=90 -XX:G1RSetUpdatingPauseTimePercent=5 -XX:SurvivorRatio=32 -XX:+PerfDisableSharedMem -XX:MaxTenuringThreshold=1 -Dusing.aikars.flags=https://mcflags.emc.gs -Daikars.new.flags=true -XX:G1NewSizePercent=30 -XX:G1MaxNewSizePercent=40 -XX:G1HeapRegionSize=8M -XX:G1ReservePercent=20 -jar server.jar --nogui
-```
-
-Save the file as `start.sh` in the folder you created earlier.
-Now, in the terminal, you can run the server by typing in:
-
-```bash
-sh ./start.sh
-```
-
-</TabItem>
-</Tabs>
-
-Don't worry if the command looks intimidating. Just focus on the `-Xms4096M -Xmx4096M` part.
-This tells the server how much RAM to use.
-
-- `-Xms4096M` tells the server to **start** with 4096MB of RAM.
-- `-Xmx4096M` tells the server to use a **maximum** of 4096MB of RAM.
-
-[More on RAM](https://www.gktoday.in/topic/rapid-access-memory-ram/)
-
-If you have a lot of RAM, you can increase the numbers to use more RAM (e.g. `-Xms8G -Xmx8G` for 8GB of RAM).
-2GB of RAM is the minimum recommended amount of RAM to use.
+<ServerCmdGenerator />
 
 ### EULA
 

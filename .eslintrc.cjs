@@ -5,6 +5,7 @@ module.exports = {
     plugins: ["@typescript-eslint"],
     root: true,
     rules: {
-        "no-undef": "off", // TS Server is already checking for this
+        "no-undef": "off", // TS Server
+        "@typescript-eslint/no-unused-vars": "off", // TS Server
     }
 };

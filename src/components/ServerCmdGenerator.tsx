@@ -55,7 +55,7 @@ function generateScript({ jarFilename, serverRamGB, gui, autoRestart }: ServerOp
 }
 
 export default function ServerCmdGenerator() {
-    const [options, setOptions] = React.useState<ServerOptions>(OTHER_OPTIONS_DEFAULT);
+    const [options, setOptions] = React.useState(OTHER_OPTIONS_DEFAULT);
     const { jarFilename, serverRamGB, gui, autoRestart } = options;
     return (
         <div className="card">

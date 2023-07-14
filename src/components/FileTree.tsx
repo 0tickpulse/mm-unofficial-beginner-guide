@@ -1,6 +1,7 @@
 import React from "react";
 import { AiOutlineFileText, AiOutlineFolder, AiOutlineFolderOpen } from "react-icons/ai";
-import { BiDownArrow, BiLogoJava, BiRightArrow, BiLogoJavascript, BiLogoTypescript } from "react-icons/bi";
+import { BiDownArrow, BiLogoJava, BiLogoJavascript, BiLogoTypescript, BiRightArrow } from "react-icons/bi";
+import { VscJson } from "react-icons/vsc";
 import styles from "./FileTree.module.css";
 
 type FileTree = File | Folder;
@@ -15,10 +16,20 @@ const EXT_MAP: Record<string, React.ReactNode> = {
 
     // JS/JSON/TS
     ".js": <BiLogoJavascript className={styles.fileIcon} />,
-    ".json": <BiLogoJavascript className={styles.fileIcon} />,
+    ".json": <VscJson className={styles.fileIcon} />,
     ".ts": <BiLogoTypescript className={styles.fileIcon} />,
+
+    // Ellipsis
+    ".": null
 };
 const EXT_DEFAULT = <AiOutlineFileText className={styles.fileIcon} />;
+
+function extIconFor(ext: string): React.ReactNode {
+    if (ext in EXT_MAP) {
+        return EXT_MAP[ext];
+    }
+    return EXT_DEFAULT;
+}
 
 export type FileTreeProps = {
     /**
@@ -68,7 +79,7 @@ type FileTreeFileProps = {
 function FileTreeFile({ file }: FileTreeFileProps) {
     const idx = file.name.lastIndexOf(".");
     const ext = idx === -1 ? undefined : file.name.substring(idx);
-    const icon = ext === undefined ? EXT_DEFAULT : EXT_MAP[ext] ?? EXT_DEFAULT;
+    const icon = extIconFor(ext ?? ".");
     return (
         <span className={styles.box}>
             <button className={styles.foldButton}>

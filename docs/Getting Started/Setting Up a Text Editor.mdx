@@ -257,18 +257,7 @@ my_friends:
     - name: Alice
       age: 19
 ```
-
-<div
-    style={{
-        // a grid with 3 columns
-        display: "grid",
-        gridTemplateColumns: "1fr 1fr 1fr",
-        // a gap of 1rem between each column
-        columnGap: "1rem",
-        // a gap of 1rem between each row
-        rowGap: "1rem",
-    }}
->
+<QuizGrid>
 
 <Quiz
     question={
@@ -313,7 +302,7 @@ my_friends:
     }
 />
 
-</div>
+</QuizGrid>
 
 ## Syntax Highlighting
 
@@ -349,19 +338,7 @@ my_friends:
 
 ## Quiz
 
-<div
-    style={{
-        // another grid with 2 columns
-        display: "grid",
-        gridTemplateColumns: "1fr 1fr",
-        // a gap of 1rem between each column
-        columnGap: "1rem",
-        // a gap of 1rem between each row
-        rowGap: "1rem",
-        // overflow
-        overflow: "auto",
-    }}
->
+<QuizGrid>
 
 <Quiz
     question="What is the shortcut to find text in a file in VSCode?"
@@ -415,4 +392,4 @@ my_friends:
     }
 />
 
-</div>
+</QuizGrid>

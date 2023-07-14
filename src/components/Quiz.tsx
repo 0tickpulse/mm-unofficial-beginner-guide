@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./Quiz.module.css";
 
-type QuizProps = {
+export type Question = {
     question: string;
     answers: React.ReactNode[];
     correctAnswer: number;
@@ -14,7 +14,7 @@ type QuizState = {
     isCorrect: boolean;
 };
 
-export default function Quiz({ question, answers, correctAnswer, explanation }: QuizProps) {
+export default function Quiz({ question, answers, correctAnswer, explanation }: Question) {
     const [state, setState] = React.useState<QuizState>({
         selectedAnswer: null,
         isSubmitted: false,

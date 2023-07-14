@@ -1,11 +1,19 @@
 import React from "react";
+import { AiOutlineFileText, AiOutlineFolder, AiOutlineFolderOpen } from "react-icons/ai";
+import { BiDownArrow, BiLogoJava, BiRightArrow } from "react-icons/bi";
 import styles from "./FileTree.module.css";
-import { AiOutlineFolderOpen, AiOutlineFolder, AiOutlineFileText } from "react-icons/ai";
-import { BiRightArrow, BiDownArrow } from "react-icons/bi";
 
 type FileTree = File | Folder;
 type File = { name: string; type: "file" };
 type Folder = { name: string; type: "folder"; children: FileTree[]; defaultOpen?: boolean };
+
+const EXT_MAP: Record<string, React.ReactNode> = {
+    // Java
+    ".java": <BiLogoJava className={styles.fileIcon} />,
+    ".jar": <BiLogoJava className={styles.fileIcon} />,
+    ".class": <BiLogoJava className={styles.fileIcon} />,
+};
+const EXT_DEFAULT = <AiOutlineFileText className={styles.fileIcon} />;
 
 export type FileTreeProps = {
     /**
@@ -53,10 +61,13 @@ type FileTreeFileProps = {
 };
 
 function FileTreeFile({ file }: FileTreeFileProps) {
+    const idx = file.name.lastIndexOf(".");
+    const ext = idx === -1 ? undefined : file.name.substring(idx);
+    const icon = ext === undefined ? EXT_DEFAULT : EXT_MAP[ext] ?? EXT_DEFAULT;
     return (
         <span className={styles.box}>
             <button className={styles.foldButton}>
-                <TwoIconsAndName b={<AiOutlineFileText className={styles.fileIcon} />} c={<span className={styles.fileName}>{file.name}</span>} />
+                <TwoIconsAndName b={icon} c={<span className={styles.fileName}>{file.name}</span>} />
             </button>
         </span>
     );

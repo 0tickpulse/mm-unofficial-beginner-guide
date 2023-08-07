@@ -1,0 +1,129 @@
+---
+sidebar_position: 4
+---
+
+# Your First Skill
+
+If you followed the previous page, you should have a mob that can move around and attack, but it's still pretty boring - it doesn't have _custom_ abilities.
+Mythic provides us with a powerful tool to create custom abilities for our mobs: **skills**.
+Skills are the bread and butter of MythicMobs, and are what makes MythicMobs so powerful and distinct from other mob plugins.
+
+## How skills work
+
+Skills are the actions that mobs can perform. They can be used to do a variety of things, such as spawning other mobs, shooting projectiles, or even just playing a sound.
+Let's add a skill to our mob that will make it play some ambient particles on itself. The skill looks like this:
+
+```yaml
+effect:particles{p=flame;hS=0.25;vS=0.5;amount=10} @selfLocation{yoffset=1} ~onTimer:5
+```
+
+Don't worry if it looks intimidating - we'll go over what each part of this skill does.
+
+### The Mechaniics
+
+The first part of the skill is `effect:particles{p=flame;hS=0.25;vS=0.5;amount=10}`.
+This is the _Mechanic_ of the skill. It's what the skill actually does. In this case, it's showing some particles.
+The things inside the `{}` are called _fields_, and they are used to configure the Mechanic.
+
+- `p=flame` - This is the particle type. In this case, it's a flame particle.
+- `hS=0.25` - This is the horizontal spread of the particles.
+- `vS=0.5` - This is the vertical spread of the particles.
+- `amount=10` - This is the amount of particles to show.
+
+With these fields, we can configure the particles to our liking.
+
+### The Targeter
+
+The next part of the skill is `@selfLocation{yoffset=1}`.
+Looking at the `@` in the beginning, this is the _Targeter_ of the skill. It's what the skill will be performed on. In this case, it's the mob's location.
+Once again, we have fields inside the `{}`. These fields are used to configure the Targeter.
+In this case, we're using the `yoffset` field to offset the Targeter's location by 1 block in the y direction.
+
+### The Trigger
+
+The last part of the skill is `~onTimer:5`.
+This is the _Trigger_ of the skill. It's what causes the skill to be performed. In this case, it's a timer Trigger - the skill will fire on a set interval.
+You can tell it's a Trigger because it starts with a `~`.
+The `5` is the interval of the timer, in ticks. There are 20 ticks in a second, so this skill will fire every 0.25 seconds.
+
+## Putting it on the mob
+
+Now that we have our skill, we need to put it on the mob. We do this by adding it to the mob's `Skills` list.
+
+```yaml
+DemonicMage:
+  Type: SKELETON
+  Display: "&4☠ &7Demonic Mage &4☠"
+  Health: 100
+  Damage: 10
+  Options:
+    MovementSpeed: 0.3
+    PreventOtherDrops: true
+    PreventSunburn: true
+    KnockbackResistance: 1
+  Equipment:
+  - BLAZE_ROD HAND
+  - LEATHER_HELMET HEAD
+  - LEATHER_CHESTPLATE CHEST
+  - LEATHER_LEGGINGS LEGS
+  - LEATHER_BOOTS FEET
+  # highlight-start
+  Skills:
+  - effect:particles{p=flame;hS=0.25;vS=0.5;amount=10} @selfLocation{yoffset=1} ~onTimer:5
+  # highlight-end
+```
+
+Now, reload MythicMobs and spawn the mob. You should see some particles coming from the mob.
+
+## Quiz
+
+<QuizGrid>
+
+<Quiz
+    question="What dictates when a skill is performed?"
+    answers={[
+        "The Mechanic",
+        "The Targeter",
+        "The Trigger",
+    ]}
+    correctAnswer={2}
+    explanation={
+        <>
+            The Trigger tells the skill when to fire, and is prefixed with a tilde (<code>~</code>).
+        </>
+    }
+/>
+
+<Quiz
+    question="What does the targeter do?"
+    answers={[
+        "It tells the skill what to perform on",
+        "It tells the skill when to perform",
+        "It tells the skill how to perform",
+    ]}
+    correctAnswer={0}
+    explanation={
+        <>
+            The Targeter tells the skill what to perform on, and is prefixed with an at sign (<code>@</code>).
+        </>
+    }
+/>
+
+<Quiz
+    question={<>
+        What does the <code>p</code> field in the <code>effect:particles</code> mechanic do?
+    </>}
+    answers={[
+        "It sets the particle type",
+        "It sets the horizontal spread",
+        "It sets the vertical spread",
+    ]}
+    correctAnswer={0}
+    explanation={
+        <>
+            The <code>p</code> field sets the particle type.
+        </>
+    }
+/>
+
+</QuizGrid>

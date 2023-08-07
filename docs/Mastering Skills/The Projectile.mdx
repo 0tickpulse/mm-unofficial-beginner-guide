@@ -15,9 +15,11 @@ The physics of the projectile is as follows:
   - This is called a `tick`. Every time the projectile moves, it ticks and runs the `onTick` skill field.
   - If it hits an entity, it runs the `onHit` skill field.
 
-Confusing? Let's make a projectile. The base projectile is the `projectile` mechanic.
+Confusing? Let's make a projectile.
 
 ## Creating a projectile
+
+Let's begin with a simple `projectile` skill.
 
 ```yml title="/plugins/MythicMobs/Mobs/ProjectileCaster.yml"
 ProjectileCaster:
@@ -34,7 +36,7 @@ CoolProjectileSkill:
   - projectile @Target
 ```
 
-This is the bare minimum. It fires a projectile at the mob's target. However, if you spawn the mob now, the projectile will do nothing. We will need to add things to the projectile.
+This is the bare minimum - it fires a projectile at the mob's target. However, if you spawn the mob now, the projectile will do nothing. We will need to add things to the projectile.
 
 ## onStart, onTick, onHit, onEnd
 

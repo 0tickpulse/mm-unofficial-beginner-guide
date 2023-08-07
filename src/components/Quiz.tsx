@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./Quiz.module.css";
 
 export type Question = {
-    question: string;
+    question: React.ReactNode;
     answers: React.ReactNode[];
     correctAnswer: number;
     explanation?: string;

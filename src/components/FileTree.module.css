@@ -3,11 +3,21 @@
     padding-left: 1rem;
 }
 
-.highlight {
+.hl-normal {
     background: var(--ifm-color-emphasis-200);
     border-radius: 0.25rem;
     padding-top: 0.25rem;
     padding-bottom: 0.25rem;
+}
+
+.hl-add {
+    /* inherit everything from hl-normal */
+    composes: hl-normal;
+}
+
+.hl-remove {
+    /* inherit everything from hl-normal */
+    composes: hl-normal;
 }
 
 .foldButton {

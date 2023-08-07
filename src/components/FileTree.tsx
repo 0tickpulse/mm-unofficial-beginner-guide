@@ -4,9 +4,11 @@ import { BiCoffee, BiDownArrow, BiLogoJavascript, BiLogoTypescript, BiRightArrow
 import { VscJson } from "react-icons/vsc";
 import styles from "./FileTree.module.css";
 
+type Highlight = "add" | "remove" | "normal" | false;
+
 type FileTree = File | Folder;
-type File = { name: string; type: "file"; highlight?: boolean };
-type Folder = { name: string; type: "folder"; children?: FileTree[]; defaultOpen?: boolean; highlight?: boolean };
+type File = { name: string; type: "file"; highlight?: Highlight };
+type Folder = { name: string; type: "folder"; children?: FileTree[]; defaultOpen?: boolean; highlight?: Highlight };
 
 function isFile(fileOrFolder: FileTree): fileOrFolder is File {
     return fileOrFolder.type === "file";
@@ -65,7 +67,15 @@ function transformPath<T extends FileTree>(path: T): T {
         const prefix = cloned.name.substring(0, idx);
         const modes = prefix.split(",");
         if (modes.includes("highlight")) {
-            cloned.highlight = true;
+            cloned.highlight = "normal";
+            matched = true;
+        }
+        if (modes.includes("hl-add")) {
+            cloned.highlight = "add";
+            matched = true;
+        }
+        if (modes.includes("hl-remove")) {
+            cloned.highlight = "remove";
             matched = true;
         }
         if (modes.includes("defaultOpen") && isFolder(cloned)) {
@@ -161,7 +171,7 @@ function FileTreeItem({ fileOrFolder }: FileTreeItemProps) {
         <div className={styles.fileTreeItem}>
             {
                 // Highlight the file/folder if it is marked as such
-                fileOrFolder.highlight ? <div className={styles.highlight}>{item}</div> : <div>{item}</div>
+                fileOrFolder.highlight ? <div className={styles["hl-" + fileOrFolder.highlight]}>{item}</div> : <div>{item}</div>
             }
         </div>
     );

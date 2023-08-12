@@ -1,0 +1,289 @@
+---
+sidebar_position: 5
+---
+
+# A Fireball Skill
+
+We're going to make a more complicated skill in addition to our first skill. This skill will cause the Demonic Mage to shoot a fireball at the player.
+
+## Using the Skill System
+
+Remember the previous page where we discussed the various components of a skill? Recall that **The Mechanic** denotes what the skill does.
+As such, we are going to use the `shootfireball` mechanic to make our skill.
+
+```yml
+- shootfireball
+```
+
+Now, we need to specify **The Targeter**, which is the way the skill chooses its targets. We're going to use the `@target` targeter, which will make the skill target whatever the mob is currently targeting.
+
+```yml
+- shootfireball @target
+```
+
+Finally, we need to specify **The Trigger**, which is the way the skill is activated. We're going to use the `~onTimer` trigger, which will make the skill activate whenever the mob attacks.
+
+```yml
+- shootfireball @target ~onTimer
+```
+
+`onTimer` is a special trigger in that it takes in an argument. This argument is the amount of time in ticks between each activation of the skill. We're going to set this to 20, which is one second.
+
+```yml
+- shootfireball @target ~onTimer:20
+```
+
+Now, we have a skill that will shoot a fireball at the player every second.
+
+So far, we used the knowledege we gained from the previous page to make this skill. However, this skill has many problems that make it unusable.
+Firstly, having a fireball shoot every second is unrealistic. We want the fireball to shoot randomly. To do that, we can give the skill a **chance** to activate.
+
+```yml
+- shootfireball @target ~onTimer:20 0.5
+```
+
+The last number is the chance for the skill to activate. In this case, the skill has a 50% chance to activate every second.
+However, it is still possible for the skill to activate multiple times in a row. To prevent this, we can add a **cooldown** to the skill.
+To do so, we use a special field in our mechanic called `cooldown`:
+
+```yml
+- shootfireball{cooldown=10} @target ~onTimer:20 0.5
+```
+
+This forces the skill to wait 10 seconds before activating again.
+
+Nice! Now we have a skill that shoots a fireball at the player every 10 seconds with a 50% chance to activate every second.
+We're going to make our skill more complex by:
+
+- Having a warning message 2 seconds before the fireball is shot
+- Playing a sound when the fireball is shot, increasing realism
+
+As you can see, our skill can no longer just use a single mechanic. We need to use multiple mechanics, but how do we do that?
+
+## Introducing the metaskill
+
+A metaskill is a list of skills that are activated together; it essentially "groups" skills together.
+In order to make a metaskill, we will go back to our files. Notice that we have a `Skills` folder under our `plugins/MythicMobs` folder:
+
+<FileTree
+    paths={[
+        "config.yml",
+        "Skills/ExampleSkills.yml",
+        "Mobs/ExampleMobs.yml",
+        "Mobs/DemonicMage.yml",
+        "...",
+    ]}
+    title={<h3>MythicMobs folder</h3>}
+/>
+
+We will make a new file under the Skills folder called `DemonicMageSkills.yml`. This file will contain our metaskill:
+
+<FileTree
+    paths={[
+        "config.yml",
+        "defaultOpen:Skills/ExampleSkills.yml",
+        "defaultOpen:Skills/hl-add:DemonicMageSkills.yml",
+        "Mobs/ExampleMobs.yml",
+        "Mobs/DemonicMage.yml",
+        "...",
+    ]}
+    title={<h3>MythicMobs folder</h3>}
+/>
+
+Now, we can add our metaskill to the file:
+
+```yml
+DemonicMageFireball:
+  Skills:
+  - shootfireball @target
+```
+
+As you can see, a metaskill also follows YAML syntax. We specify the skills that will be run in the metaskill under the `Skills` field.
+
+:::info
+
+Notice that we removed the trigger, the chance, and the cooldown. We'll add them back later.
+
+:::
+
+## Calling the metaskill
+
+Now that we have our metaskill, we need to call it in our mob. We can do so using a special mechanic called `skill`, which takes in the name of the metaskill:
+
+```yml
+- skill{skill=DemonicMageFireball}
+```
+
+Adding it to our mob, we get:
+
+```yml
+DemonicMage:
+  Type: SKELETON
+  Display: "&4☠ &7Demonic Mage &4☠"
+  Health: 100
+  Damage: 10
+  Options:
+    MovementSpeed: 0.3
+    PreventOtherDrops: true
+    PreventSunburn: true
+    KnockbackResistance: 1
+  Equipment:
+  - BLAZE_ROD HAND
+  - LEATHER_HELMET HEAD
+  - LEATHER_CHESTPLATE CHEST
+  - LEATHER_LEGGINGS LEGS
+  - LEATHER_BOOTS FEET
+  Skills:
+  - effect:particles{p=flame;hS=0.25;vS=0.5;amount=10} @selfLocation{yoffset=1} ~onTimer:5
+  # highlight-start
+  - skill{skill=DemonicMageFireball}
+  # highlight-end
+```
+
+In short, the `skill` mechanic is like a normal mechanic, except it executes an entire metaskill.
+
+Now, remember how we removed the trigger, the chance, and the cooldown from our metaskill?
+We will add them back, but this time, we will add them to our mob's skill instead of the `shootfireball` skill.
+By doing so, we're applying them to the entire metaskill instead of just the fireball.
+
+```yml
+- skill{skill=DemonicMageFireball} ~onTimer:20 0.5
+```
+
+Nice! We have put our fireball into its own metaskill and called it in our mob. Now, we can add the warning message and the sound.
+
+## Adding the Warning Message
+
+To add the warning message, we will use the `message` mechanic. This mechanic sends a message to the target.
+
+```yml
+- message{m=&cThe Demonic Mage is charging up a fireball!} @PlayersInRadius{r=30}
+```
+
+Notice that we used the `PlayersInRadius` targeter. This targeter targets all players within a certain radius of the mob.
+
+Now, we can add the message to our metaskill:
+
+```yml
+DemonicMageFireball:
+  Skills:
+  - message{m=&cThe Demonic Mage is charging up a fireball!} @PlayersInRadius{r=30}
+  - shootfireball @target
+```
+
+However, remember that we want the fireball to be shot 2 seconds after the message.
+We can achieve this using another mechanic called `delay`.
+All `delay` does is cause the skill to wait a certain amount of ticks.
+`delay` is used so common that the syntax is kept very simple - simply add the number of ticks after the `delay` word.
+For example, `delay 20` or `delay 40`. Here's what our skill looks like with the delay:
+
+```yml
+DemonicMageFireball:
+  Skills:
+  - message{m=&cThe Demonic Mage is charging up a fireball!} @PlayersInRadius{r=30}
+  - delay 40
+  - shootfireball @target
+```
+
+## Adding the Sound Effect
+
+To add sounds, we use the `effect:sound` mechanic, which simply plays a sound to the target.
+It takes in a `s` field, which is the ID of the sound.
+You can get this by going into Minecraft, typing `/playsound` and looking at all the tab-completions.
+
+In this case, we will use the `entity.ghast.shoot` sound.
+Adding this to our skill, we get this:
+
+```yml
+DemonicMageFireball:
+  Skills:
+  - message{m=&cThe Demonic Mage is charging up a fireball!} @PlayersInRadius{r=30}
+  - delay 40
+  - effect:sound{s=entity.ghast.shoot} @selfLocation
+  - shootfireball{v=1.5;yield=1.5} @target
+```
+
+By using the `@selfLocation` targeter, we make the sound play at the mob's location, so anyone nearby can hear it.
+
+## Conditions
+
+We're almost there! There is one flaw with our skill: it will run regardless of whether it is in combat or not.
+If it isn't in combat, it will still send the warning message, play the sound, but it will not shoot the fireball because it doesn't have a target.
+**We don't want that.**
+
+To fix this, we can use a new section in our metaskill called `Conditions`.
+It contains a list of conditions that must be met in order for the metaskill to run.
+
+```yml
+DemonicMageFireball:
+  Conditions:
+  Skills:
+  - message{m=&cThe Demonic Mage is charging up a fireball!} @PlayersInRadius{r=30}
+  - delay 40
+  - effect:sound{s=entity.ghast.shoot} @selfLocation
+  - shootfireball{v=1.5;yield=1.5} @target
+```
+
+In this case, we want the metaskill to run only if the mob is in combat.
+To do so, we use the `incombat` condition.
+
+```yml
+DemonicMageFireball:
+  Conditions:
+  - incombat
+  Skills:
+  - message{m=&cThe Demonic Mage is charging up a fireball!} @PlayersInRadius{r=30}
+  - delay 40
+  - effect:sound{s=entity.ghast.shoot} @selfLocation
+  - shootfireball{v=1.5;yield=1.5} @target
+```
+
+Now, the metaskill will only run if the mob is in combat.
+
+## Conclusion
+
+We have successfully made our mob shoot a fireball at the player randomly.
+This fireball is accompanied by a warning message and a sound effect.
+We also made sure that the skill only runs if the mob is in combat.
+
+This was a long and heavy page, so feel free to go through it a few times if you need to.
+By having a thorough understandign of metaskills, you unlock a whole new level of complexity which let us make advanced and intricate mechanics for our mobs.
+
+## Full Code
+
+Here is the full code for our mob:
+
+```yml title="/plugins/MythicMobs/Mobs/DemonicMage.yml"
+DemonicMage:
+  Type: SKELETON
+  Display: "&4☠ &7Demonic Mage &4☠"
+  Health: 100
+  Damage: 10
+  Options:
+    MovementSpeed: 0.3
+    PreventOtherDrops: true
+    PreventSunburn: true
+    KnockbackResistance: 1
+  Equipment:
+  - BLAZE_ROD HAND
+  - LEATHER_HELMET HEAD
+  - LEATHER_CHESTPLATE CHEST
+  - LEATHER_LEGGINGS LEGS
+  - LEATHER_BOOTS FEET
+  Skills:
+  - effect:particles{p=flame;hS=0.25;vS=0.5;amount=10} @selfLocation{yoffset=1} ~onTimer:5
+  - skill{skill=DemonicMageFireball} ~onTimer:20 0.5
+```
+
+And our skill:
+
+```yml title="/plugins/MythicMobs/Skills/DemonicMageSkills.yml"
+DemonicMageFireball:
+  Conditions:
+  - incombat
+  Skills:
+  - message{m=&cThe Demonic Mage is charging up a fireball!} @PlayersInRadius{r=30}
+  - delay 40
+  - effect:sound{s=entity.ghast.shoot} @selfLocation
+  - shootfireball{v=1.5;yield=1.5} @target
+```

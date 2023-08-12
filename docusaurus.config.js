@@ -35,7 +35,7 @@ const config = {
         defaultLocale: "en",
         locales: ["en"],
     },
-    
+
     stylesheets: [
         {
             href: "https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/katex.min.css",

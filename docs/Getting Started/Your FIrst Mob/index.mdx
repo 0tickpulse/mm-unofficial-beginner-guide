@@ -33,7 +33,7 @@ If you're ready, let's get started! Make sure you have a server with MythicMobs 
 ## Exploring the MythicMobs folder
 
 If you have MythicMobs installed, you should have a folder called `MythicMobs` under your server's `plugins` folder.
-This folder contains all the files that MythicMobs uses to run, and should contain a few folders and files, including:
+This folder contains all the files that MythicMobs uses to run and should contain a few folders and files, including:
 
 <FileTree
     paths={[
@@ -86,17 +86,17 @@ This is the internal ID of the mob. It is used to refer to the mob in other plac
   Type: SKELETON
 ```
 
-Since MythicMobs is a plugin, it cannot actually create custom entity types, so we have to base our mob off an existing entity type.
+Since MythicMobs is a plugin, it cannot actually create custom entity types, so we have to base our mob on an existing entity type.
 This line tells MythicMobs to base our mob off the `SKELETON` entity type.
-Notice how it is **indented** - this is important, as it tells MythicMobs that this line is a part of the mob.
+Notice how it is **indented** - This is important, as it tells MythicMobs that this line is a part of the mob.
 
 ```yaml
   Display: "&4☠ &7Demonic Mage &4☠"
 ```
 
 This line tells MythicMobs what the name of the mob should be.
-The `&4` and `&7` are colorcodes, which tell MythicMobs to color the text red and grey respectively.
-The `☠` is a unicode character, which renders as a skull.
+The `&4` and `&7` are **color codes**, which tell MythicMobs to color the text red and grey respectively.
+The `☠` is a Unicode character, which renders a skull.
 
 ```yaml
   Health: 100
@@ -159,7 +159,7 @@ You should see a skeleton with a blaze rod in its hand and leather armor.
 ## Additional mob options
 
 There are many more options that you can use to customize your mob.
-These options go under an `Options` section, and are used to customize the mob's behavior.
+These options go under an `Options` section and are used to customize the mob's behavior.
 
 For example, we can make our mob not burn in sunlight by adding the following line:
 
@@ -189,7 +189,7 @@ Options:
   # highlight-end
 ```
 
-Finally, lets make the mob immune to all knockback. We can do this by setting its knockback resistance to 1 (100%):
+Finally, let's make the mob immune to all knockback. We can do this by setting its knockback resistance to 1 (100%):
 
 ```yaml
 Options:

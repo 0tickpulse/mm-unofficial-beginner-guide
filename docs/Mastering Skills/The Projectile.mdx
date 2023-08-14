@@ -1,7 +1,7 @@
 # The Projectile
 
 Mythic has a useful mechanic called `projectile`. This allows full control over projectiles in skills, allowing you to create fireballs, beams, waves, and more!
-However, this skill is extremely difficult to master and requires vast knowledge of Mythic's mechanics. This guide will teach you how to use the `projectile` mechanic.
+However, this skill is extremely difficult to master and requires a vast knowledge of Mythic's mechanics. This guide will teach you how to use the `projectile` mechanic.
 
 ## How projectiles work
 
@@ -40,7 +40,7 @@ This is the bare minimum - it fires a projectile at the mob's target. However, i
 
 ## onStart, onTick, onHit, onEnd
 
-Firstly, we will need to add a `onTick` skill attribute. This sets what meta-skill will be run every time the projectile ticks.
+Firstly, we will need to add an `onTick` skill field. This sets what meta-skill will be run every time the projectile ticks.
 
 ```yml
 CoolProjectileSkill:
@@ -79,7 +79,7 @@ CoolProjectileSkillTick:
 # highlight-end
 ```
 
-Next, we add an `onHit` skill attribute, which denotes what meta-skill is run when the projectile hits something.
+Next, we add an `onHit` skill field, which denotes what meta-skill is run when the projectile hits something.
 
 ```yml
 CoolProjectileSkill:
@@ -103,7 +103,7 @@ You might be saying, this skill is missing a targeter! However, this is a specia
 
 ## Hit this and that
 
-There are a lot of other attributes for projectiles. Let's look at the attributes that denote who the projectile hits.
+There are a lot of other fields for projectiles. Let's look at the fields that denote who the projectile hits.
 
 Let's say that we want the projectile to go through blocks. To do this, we add `stopAtBlock=false` to the projectile.
 
@@ -139,15 +139,15 @@ CoolProjectileSkillHit:
 
 ## Movement: velocity and gravity
 
-There are also attributes that change how fast the projectile moves. Firstly, there is a `velocity` attribute that changes the velocity of the projectile.
+Some fields change how fast the projectile moves. Firstly, there is a `velocity` field that changes the velocity of the projectile.
 
 The velocity formula is this:
 
 $$
-\textrm{Blocks per second} = \cfrac{\textrm{velocity attribute on projectile}}{10}
+\textrm{Blocks per second} = \cfrac{\textrm{velocity field on projectile}}{10}
 $$
 
-For example, if you set the `velocity` attribute as `50`, it will move 5 blocks per second.
+For example, if you set the `velocity` field as `50`, it will move 5 blocks per second.
 
 ```yml
 CoolProjectileSkill:

@@ -35,7 +35,7 @@ Finally, we need to specify **The Trigger**, which is the way the skill is activ
 
 Now, we have a skill that will shoot a fireball at the player every second.
 
-So far, we used the knowledege we gained from the previous page to make this skill. However, this skill has many problems that make it unusable.
+So far, we used the knowledge we gained from the previous page to make this skill. However, this skill has many problems that make it unusable.
 Firstly, having a fireball shoot every second is unrealistic. We want the fireball to shoot randomly. To do that, we can give the skill a **chance** to activate.
 
 ```yml
@@ -63,7 +63,7 @@ As you can see, our skill can no longer just use a single mechanic. We need to u
 ## Introducing the metaskill
 
 A metaskill is a list of skills that are activated together; it essentially "groups" skills together.
-In order to make a metaskill, we will go back to our files. Notice that we have a `Skills` folder under our `plugins/MythicMobs` folder:
+To make a metaskill, we will go back to our files. Notice that we have a `Skills` folder under our `plugins/MythicMobs` folder:
 
 <FileTree
     paths={[
@@ -174,7 +174,7 @@ DemonicMageFireball:
 However, remember that we want the fireball to be shot 2 seconds after the message.
 We can achieve this using another mechanic called `delay`.
 All `delay` does is cause the skill to wait a certain amount of ticks.
-`delay` is used so common that the syntax is kept very simple - simply add the number of ticks after the `delay` word.
+`delay` is used so commonly that the syntax is kept very simple - simply add the number of ticks after the `delay` word.
 For example, `delay 20` or `delay 40`. Here's what our skill looks like with the delay:
 
 ```yml
@@ -189,7 +189,7 @@ DemonicMageFireball:
 
 To add sounds, we use the `effect:sound` mechanic, which simply plays a sound to the target.
 It takes in a `s` field, which is the ID of the sound.
-You can get this by going into Minecraft, typing `/playsound` and looking at all the tab-completions.
+You can get this by going into Minecraft, typing `/playsound` and looking at all the tab completions.
 
 In this case, we will use the `entity.ghast.shoot` sound.
 Adding this to our skill, we get this:
@@ -208,11 +208,11 @@ By using the `@selfLocation` targeter, we make the sound play at the mob's locat
 ## Conditions
 
 We're almost there! There is one flaw with our skill: it will run regardless of whether it is in combat or not.
-If it isn't in combat, it will still send the warning message, play the sound, but it will not shoot the fireball because it doesn't have a target.
+If it isn't in combat, it will still send the warning message, and play the sound, but it will not shoot the fireball because it doesn't have a target.
 **We don't want that.**
 
 To fix this, we can use a new section in our metaskill called `Conditions`.
-It contains a list of conditions that must be met in order for the metaskill to run.
+It contains a list of conditions that must be met for the metaskill to run.
 
 ```yml
 DemonicMageFireball:
@@ -247,7 +247,7 @@ This fireball is accompanied by a warning message and a sound effect.
 We also made sure that the skill only runs if the mob is in combat.
 
 This was a long and heavy page, so feel free to go through it a few times if you need to.
-By having a thorough understanding of metaskills, you unlock a whole new level of complexity which let us make advanced and intricate mechanics for our mobs.
+By having a thorough understanding of metaskills, you unlock a whole new level of complexity that lets you make advanced and intricate mechanics for our mobs.
 
 ## Full Code
 

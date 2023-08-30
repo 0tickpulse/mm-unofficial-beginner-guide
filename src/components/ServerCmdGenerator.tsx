@@ -64,7 +64,7 @@ export default function ServerCmdGenerator() {
                 Use this tool to generate a script to run your server. Adapted from <a href="https://flags.sh" target="_blank">flags.sh</a>.
             </div>
             <div className="card__body">
-                <div className={styles.flagGenerator}>
+                <div className="dynamic-grid">
                     <div>
                         <h4>Jar filename</h4>
                         <input

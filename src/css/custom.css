@@ -51,3 +51,10 @@ label {
     display: inline-block;
     height: 2rem;
 }
+
+.dynamic-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: repeat(auto-fit, minmax(250x, 1fr));
+    grid-gap: 1rem;
+}

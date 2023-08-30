@@ -15,3 +15,53 @@ MythicMobs allows us to configure the mob's drops in a very flexible and powerfu
 
 We will start by adding a `Drops` section to our mob's configuration file.
 
+```yml title="/plugins/MythicMobs/Mobs/DemonicMage.yml"
+DemonicMage:
+  Type: SKELETON
+  Display: "&4☠ &7Demonic Mage &4☠"
+  Health: 100
+  Damage: 10
+  Options:
+    MovementSpeed: 0.3
+    PreventOtherDrops: true
+    PreventSunburn: true
+    KnockbackResistance: 1
+  Equipment:
+  - BLAZE_ROD HAND
+  - LEATHER_HELMET HEAD
+  - LEATHER_CHESTPLATE CHEST
+  - LEATHER_LEGGINGS LEGS
+  - LEATHER_BOOTS FEET
+  Skills:
+  - effect:particles{p=flame;hS=0.25;vS=0.5;amount=10} @selfLocation{yoffset=1} ~onTimer:5
+  - skill{skill=DemonicMageFireball} ~onTimer:20 0.5
+  # highlight-start
+  Drops:
+  - ...
+  # highlight-end
+```
+
+We will add our drops to this section in the form of a YAML list.
+Each entry in the list will represent a single drop.
+
+```yml
+Drops:
+- blaze_powder 3-5 0.5
+```
+
+Let's break this down into its components.
+
+* `blaze_powder` is the item that will be dropped.
+* `3-5` is the amount of items that will be dropped. This will be a random number between 3 and 5.
+* `0.5` is the chance that this drop will occur. This will be a 50% chance.
+
+We can add as many drops as we want to this list.
+
+Here is a generator for a simple drop:
+
+<DropGenerator />
+
+## Drop Tables
+
+The above drop format is very simple, but its capabilities are limited.
+To make full use of MythicMobs' drop system, we will need to use drop tables.

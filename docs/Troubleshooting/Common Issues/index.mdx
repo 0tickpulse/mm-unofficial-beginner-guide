@@ -1,0 +1,18 @@
+# Common Issues
+
+## "My mobs' health cap at 2048!"
+
+If you set your mob's health to a number higher than 2048 and see that it is capped at 2048, it is likely an issue with your `spigot.yml` configuration file.
+In that file, there is a config option under `settings` called `attribute` that looks like this by default:
+
+```yml
+  attribute:
+    maxHealth:
+      max: 2048.0
+    movementSpeed:
+      max: 2048.0
+    attackDamage:
+      max: 2048.0
+```
+
+This is the maximum value that any attribute can have. If you want to increase the maximum health of your mobs, you will need to increase the `maxHealth` value.

@@ -10,10 +10,6 @@ type FileTree = File | Folder;
 type File = { name: string; type: "file"; highlight?: Highlight };
 type Folder = { name: string; type: "folder"; children?: FileTree[]; defaultOpen?: boolean; highlight?: Highlight };
 
-function isFile(fileOrFolder: FileTree): fileOrFolder is File {
-    return fileOrFolder.type === "file";
-}
-
 function isFolder(fileOrFolder: FileTree): fileOrFolder is Folder {
     return fileOrFolder.type === "folder";
 }

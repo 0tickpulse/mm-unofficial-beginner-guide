@@ -38,7 +38,7 @@ Just like the Demonic Mage, we will create a mob file for the Royal Guard.
 
 We will configure it with what we already know:
 
-```yml
+```yml title="/plugins/MythicMobs/Mobs/RoyalGuard.yml"
 RoyalGuard:
   Type: SKELETON
   Display: '&6⚔ &7Royal Guard &6⚔'
@@ -60,3 +60,30 @@ RoyalGuard:
 ```
 
 If you don't know what some of these options do, you should revisit the previous pages.
+
+## Conclusion
+
+This was a very short page, but we will be adding more to the Royal Guard in the next few pages.
+
+### Full Code
+
+```yml title="/plugins/MythicMobs/Mobs/RoyalGuard.yml"
+RoyalGuard:
+  Type: SKELETON
+  Display: '&6⚔ &7Royal Guard &6⚔'
+  Health: 100
+  Damage: 10
+  Options:
+    MovementSpeed: 0.3
+    PreventOtherDrops: true
+    PreventSunburn: true
+    KnockbackResistance: 1
+  Equipment:
+  - IRON_SWORD HAND
+  - IRON_HELMET HEAD
+  - IRON_CHESTPLATE CHEST
+  - IRON_LEGGINGS LEGS
+  - IRON_BOOTS FEET
+  KillMessages:
+  - <target.name> was killed by a Royal Guard
+```

@@ -135,3 +135,26 @@ In the next page, we'll create a much more complex skill, so below is a quick qu
 />
 
 </QuizGrid>
+
+### Full Code
+
+```yml title="/plugins/MythicMobs/mobs/DemonicMage.yml"
+DemonicMage:
+  Type: SKELETON
+  Display: "&4☠ &7Demonic Mage &4☠"
+  Health: 100
+  Damage: 10
+  Options:
+    MovementSpeed: 0.3
+    PreventOtherDrops: true
+    PreventSunburn: true
+    KnockbackResistance: 1
+  Equipment:
+  - BLAZE_ROD HAND
+  - LEATHER_HELMET HEAD
+  - LEATHER_CHESTPLATE CHEST
+  - LEATHER_LEGGINGS LEGS
+  - LEATHER_BOOTS FEET
+  Skills:
+  - effect:particles{p=flame;hS=0.25;vS=0.5;amount=10} @selfLocation{yoffset=1} ~onTimer:5
+```

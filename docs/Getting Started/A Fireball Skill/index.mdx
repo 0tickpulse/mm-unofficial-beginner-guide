@@ -4,7 +4,9 @@ sidebar_position: 5
 
 # A Fireball Skill
 
-We're going to make a more complicated skill in addition to our first skill. This skill will cause the Demonic Mage to shoot a fireball at the player.
+We're going to make a more complicated skill in addition to our first skill. This skill will cause the Demonic Mage to shoot a fireball at the player randomly.
+
+![Demonic Mage shooting a fireball](demonic-mage-fireball.png)
 
 ## Using the Skill System
 
@@ -15,7 +17,7 @@ As such, we are going to use the `shootfireball` mechanic to make our skill.
 - shootfireball
 ```
 
-Now, we need to specify **The Targeter**, which is the way the skill chooses its targets. We're going to use the `@target` targeter, which will make the skill target whatever the mob is currently targeting.
+Next, we need to specify **The Targeter**, which is the way the skill chooses its targets. We're going to use the `@target` targeter, which will make the skill target whatever the mob is currently targeting.
 
 ```yml
 - shootfireball @target
@@ -42,7 +44,7 @@ Firstly, having a fireball shoot every second is unrealistic. We want the fireba
 - shootfireball @target ~onTimer:20 0.5
 ```
 
-The last number is the chance for the skill to activate. In this case, the skill has a 50% chance to activate every second.
+The last number is the chance for the skill to activate. In this case, the skill has a 0.5 (50%) chance to activate every second.
 However, it is still possible for the skill to activate multiple times in a row. To prevent this, we can add a **cooldown** to the skill.
 To do so, we use a special field in our mechanic called `cooldown`:
 
@@ -249,7 +251,7 @@ We also made sure that the skill only runs if the mob is in combat.
 This was a long and heavy page, so feel free to go through it a few times if you need to.
 By having a thorough understanding of metaskills, you unlock a whole new level of complexity that lets you make advanced and intricate mechanics for our mobs.
 
-## Full Code
+### Full Code
 
 Here is the full code for our mob:
 

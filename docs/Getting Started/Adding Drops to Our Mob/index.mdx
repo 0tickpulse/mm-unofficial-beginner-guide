@@ -4,12 +4,6 @@ sidebar_position: 6
 
 # Drop Tables
 
-:::caution Placeholder page
-
-This page is a placeholder for the upcoming drop table documentation. It will be updated soon.
-
-:::
-
 We are now going to configure the drops for our mob.
 MythicMobs allows us to configure the mob's drops in a very flexible and powerful way.
 
@@ -51,9 +45,9 @@ Drops:
 
 Let's break this down into its components.
 
-* `blaze_powder` is the item that will be dropped.
-* `3-5` is the amount of items that will be dropped. This will be a random number between 3 and 5.
-* `0.5` is the chance that this drop will occur. This will be a 50% chance.
+- `blaze_powder` is the item that will be dropped.
+- `3-5` is the amount of items that will be dropped. This will be a random number between 3 and 5.
+- `0.5` is the chance that this drop will occur. This will be a 50% chance.
 
 We can add as many drops as we want to this list.
 
@@ -65,3 +59,181 @@ Here is a generator for a simple drop:
 
 The above drop format is very simple, but its capabilities are limited.
 To make full use of MythicMobs' drop system, we will need to use drop tables.
+
+Let's go back to our MythicMobs folder, which should now look similar to the following structure below.
+We will now visit a new folder called `DropTables`:
+
+<FileTree
+    paths={[
+        "config.yml",
+        "Mobs/ExampleMobs.yml",
+        "Mobs/DemonicMage.yml",
+        "Skills/ExampleSkills.yml",
+        "Skills/DemonicMageSkills.yml",
+        "defaultOpen,hl-add:DropTables/ExampleDropTables.yml",
+    ]}
+    title={<h3>MythicMobs folder</h3>}
+/>
+
+We will create a new file called `DemonicMageDrops.yml` in this folder.
+
+The format of a drop table is very similar to the format of a skill:
+
+```yml title="/plugins/MythicMobs/DropTables/DemonicMageDrops.yml"
+DemonicMageDrops:
+  Drops:
+  - blaze_powder 3-5 0.5
+  - fire_charge 1-2 0.2
+```
+
+Let's break this down into its components.
+Like a skill config or a mob config, the drop table has an ID at the top.
+The actual drops are defined in the `Drops` section.
+
+This allows for us to group our drops into different drop tables, and then reference them in our mob configs.
+In this case, let's add it to our mob configuration.
+To do so, add a new drop like you would normally, except instead of writing the item, simply write the ID of the drop table.
+
+```yml title="/plugins/MythicMobs/Mobs/DemonicMage.yml"
+DemonicMage:
+  Type: SKELETON
+  Display: "&4☠ &7Demonic Mage &4☠"
+  Health: 100
+  Damage: 10
+  Options:
+    MovementSpeed: 0.3
+    PreventOtherDrops: true
+    PreventSunburn: true
+    KnockbackResistance: 1
+  Equipment:
+  - BLAZE_ROD HAND
+  - LEATHER_HELMET HEAD
+  - LEATHER_CHESTPLATE CHEST
+  - LEATHER_LEGGINGS LEGS
+  - LEATHER_BOOTS FEET
+  Skills:
+  - effect:particles{p=flame;hS=0.25;vS=0.5;amount=10} @selfLocation{yoffset=1} ~onTimer:5
+  - skill{skill=DemonicMageFireball} ~onTimer:20 0.5
+  Drops:
+  - DemonicMageDrops
+```
+
+Nice! Now our mob will drop the items defined in the drop table.
+
+## Additional capabilities
+
+Besides grouping drops, drop tables have a few other capabilities that we will look into.
+For example, we want to make our mob only drop _either_ a blaze powder _or_ a fire charge, but never both.
+We can do that by adding the `TotalItems` option to our drop table.
+
+```yml title="/plugins/MythicMobs/DropTables/DemonicMageDrops.yml"
+DemonicMageDrops:
+  TotalItems: 1
+  Drops:
+  - blaze_powder 3-5 0.5
+  - fire_charge 1-2 0.2
+```
+
+In addition, we want to make our mob's drops scale on the player's luck.
+The `BonusLuckItems` option allows us to add a random amount of items to the drop table, based on the player's luck.
+
+```yml title="/plugins/MythicMobs/DropTables/DemonicMageDrops.yml"
+DemonicMageDrops:
+  TotalItems: 1
+  BonusLuckItems: 1
+  Drops:
+  - blaze_powder 3-5 0.5
+  - fire_charge 1-2 0.2
+```
+
+In this case, if the player has, for example, 3 luck, the drop table will drop 6-8 blaze powder or 4-5 fire charges.
+
+## Conclusion
+
+Not only have we removed the default drops from our mob, but we have also added a drop table that allows us to drop multiple items at once, and scale it based on the player's luck.
+Having a drop table also allows us to easily reuse the drops in other mobs, and makes it easier to maintain our drops.
+
+### Quiz
+
+<QuizGrid>
+
+<Quiz
+    question="What is the correct format for a drop?"
+    answers={[
+        <code>{"<item> <amount> <chance>"}</code>,
+        <code>{"<item> <chance> <amount>"}</code>,
+        <code>{"<amount> <item> <chance>"}</code>,
+        <code>{"<amount> <chance> <item>"}</code>,
+    ]}
+    correctAnswer={0}
+    explanation={
+        <>
+            The correct format is <code>{"<item> <amount> <chance>"}</code>.
+            The item is the item that will be dropped, the amount is the amount of items that will be dropped, and the chance is the chance that this drop will occur.
+        </>
+    }
+/>
+
+<Quiz
+    question="Why do we use drop tables instead of just adding the drops to the mob?"
+    answers={[
+        "They perform better than inline drops.",
+        "They enable grouping and other functionalities.",
+        "Inline drops are deprecated.",
+        "They are supported by more versions of MythicMobs.",
+    ]}
+    correctAnswer={1}
+    explanation={
+        <>
+            Drop tables enable grouping and other advanced functionalities such as scaling drops based on the player's luck.
+        </>
+    }
+/>
+
+</QuizGrid>
+
+## Full Code
+
+```yml title="/plugins/MythicMobs/Mobs/DemonicMage.yml"
+DemonicMage:
+  Type: SKELETON
+  Display: "&4☠ &7Demonic Mage &4☠"
+  Health: 100
+  Damage: 10
+  Options:
+    MovementSpeed: 0.3
+    PreventOtherDrops: true
+    PreventSunburn: true
+    KnockbackResistance: 1
+  Equipment:
+  - BLAZE_ROD HAND
+  - LEATHER_HELMET HEAD
+  - LEATHER_CHESTPLATE CHEST
+  - LEATHER_LEGGINGS LEGS
+  - LEATHER_BOOTS FEET
+  Skills:
+  - effect:particles{p=flame;hS=0.25;vS=0.5;amount=10} @selfLocation{yoffset=1} ~onTimer:5
+  - skill{skill=DemonicMageFireball} ~onTimer:20 0.5
+  Drops:
+  - DemonicMageDrops
+```
+
+```yml title="/plugins/MythicMobs/DropTables/DemonicMageDrops.yml"
+DemonicMageDrops:
+  TotalItems: 1
+  BonusLuckItems: 1
+  Drops:
+  - blaze_powder 3-5 0.5
+  - fire_charge 1-2 0.2
+```
+
+```yml title="/plugins/MythicMobs/Skills/DemonicMageSkills.yml"
+DemonicMageFireball:
+  Conditions:
+  - incombat
+  Skills:
+  - message{m=&cThe Demonic Mage is charging up a fireball!} @PlayersInRadius{r=30}
+  - delay 40
+  - effect:sound{s=entity.ghast.shoot} @selfLocation
+  - shootfireball{v=1.5;yield=1.5} @target
+```

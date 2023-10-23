@@ -10,11 +10,9 @@ Mythic is a suite of plugins developed by MythicCraft, focused on providing an i
 
 ### Is a plugin a mod?
 
-A plugin is _like_ a mod, but for servers. They modify the server's code and change how they work. This also means that clients (players) do not have to worry about installing mods.
+If you have played Minecraft for a long time, you would know that there are things called mods which modify Minecraft's code. However, mods are different from plugins.
 
-If you have played Minecraft for a long time, you would know that there are things called mods. These are things that modify Minecraft's code. However, mods are different from plugins.
-
-Plugins modify the server and only the server. They cannot modify the client. However, mods can modify both the server and the client. The advantage plugins have here is that only servers need plugins - clients can just log on without needing to use anything. The disadvantage is that since plugins cannot directly modify Minecraft's code, they have to adhere to many restrictions that Mojang has set.
+A plugin is _like_ a mod, but only for servers. They only modify the server's code. This means that only servers need plugins - clients can just log on without needing to use anything. However, since plugins cannot directly modify the client's code, they have to adhere to many restrictions that Mojang has set.
 
 ### Example Mythic code
 

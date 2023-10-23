@@ -226,14 +226,3 @@ DemonicMageDrops:
   - blaze_powder 3-5 0.5
   - fire_charge 1-2 0.2
 ```
-
-```yml title="/plugins/MythicMobs/Skills/DemonicMageSkills.yml"
-DemonicMageFireball:
-  Conditions:
-  - incombat
-  Skills:
-  - message{m=&cThe Demonic Mage is charging up a fireball!} @PlayersInRadius{r=30}
-  - delay 40
-  - effect:sound{s=entity.ghast.shoot} @selfLocation
-  - shootfireball{v=1.5;yield=1.5} @target
-```

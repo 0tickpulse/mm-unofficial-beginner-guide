@@ -60,6 +60,9 @@ const config = {
                     editUrl: "https://github.com/0tickpulse/mm-unofficial-beginner-guide/edit/main/",
                     remarkPlugins: [math],
                     rehypePlugins: [katex],
+
+                    showLastUpdateAuthor: true,
+                    showLastUpdateTime: true,
                 },
                 blog: false,
                 theme: {

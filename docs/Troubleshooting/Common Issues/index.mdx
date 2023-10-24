@@ -1,4 +1,16 @@
-# Common Issues
+# Common Issues and Pitfalls
+
+This page contains a list of common issues and pitfalls that users run into when using MythicMobs.
+Before you ask for help, please read through this page to see if your issue is listed here.
+
+## `bloodyscreen` mechanic causing worldborder conflicts
+
+The `bloodyscreen` effect causes the player's screen to display a red vignette. This is done by having the server send a packet to the client to change the worldborder on the clientside. It sets the center of the worldborder somewhere far away from spawn so that you are guaranteed to be outside the worldborder, causing the warning to show. This can cause some issues:
+
+- There cannot be more than one worldborder at once. This means that while you have the `bloodyscreen`, the "real" worldborder will disappear. This can be detrimental especially if the worldborder is small (for things like minigames)
+- You cannot build outside the worldborder. This means that while you have the `bloodyscreen`, you cannot place or destroy blocks (needs verification)
+
+Hence, if you are planning to use `bloodyscreen` effect, make sure that you have a workaround for those issues.
 
 ## "My mobs' health cap at 2048!"
 
@@ -16,3 +28,36 @@ In that file, there is a config option under `settings` called `attribute` that 
 ```
 
 This is the maximum value that any attribute can have. If you want to increase the maximum health of your mobs, you will need to increase the `maxHealth` value.
+
+## Don't test in Creative Mode
+
+Many features of MythicMobs, like targeters, ignore creative mode players by default.
+This is to prevent mobs from affecting players in creative mode, but it also means that you can't test your mobs in creative mode.
+Therefore, you should always check if you are using the correct gamemode when testing your mobs.
+
+## Update your things
+
+MythicMobs is constantly being updated with new features and bug fixes, and so is Paper, Minecraft, and other software.
+It is important to keep your server up to date to ensure that you don't run into any issues that have already been fixed.
+
+## Follow proper indentation
+
+MythicMobs uses YAML for configuration, and YAML is very strict about indentation.
+If you don't follow the proper indentation, you will get errors.
+
+For example:
+
+```yml
+MobID:
+# error-start
+Type: ZOMBIE
+# error-end
+```
+
+This will throw an error because the `Type` key is not indented properly.
+It should be indented like this:
+
+```yml
+MobID:
+  Type: ZOMBIE
+```

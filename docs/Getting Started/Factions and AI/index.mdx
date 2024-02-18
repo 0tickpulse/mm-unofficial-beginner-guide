@@ -29,8 +29,6 @@ RoyalGuard:
   # highlight-start
   Faction: Royal
   # highlight-end
-  KillMessages:
-  - <target.name> was killed by a Royal Guard
 ```
 
 Here, we have assigned the `Royal` faction to our Royal Guard mob.
@@ -53,15 +51,251 @@ DemonicMage:
   - LEATHER_CHESTPLATE CHEST
   - LEATHER_LEGGINGS LEGS
   - LEATHER_BOOTS FEET
-  # highlight-start
-  Faction: Demon
-  # highlight-end
   Skills:
   - effect:particles{p=flame;hS=0.25;vS=0.5;amount=10} @selfLocation{yoffset=1} ~onTimer:5
   - skill{skill=DemonicMageFireball} ~onTimer:20 0.5
+  # highlight-start
+  Faction: Demon
+  # highlight-end
   Drops:
   - DemonicMageDrops
 ```
 
 Currently, these factions are just names, but we will soon see how they can be used to create more interesting interactions between mobs.
-This is mainly done through the use of custom AI in our mobs.
+Next, remember how we wanted the Royal Guard to attack monsters? We can do that through a new concept called Custom AI.
+
+## Custom AI
+
+Normally, mobs just follow the vanilla mob AI, which is basic and inflexible.
+Mythic offers a way for us to configure our own AI for mobs, which is much more powerful and versatile.
+AI mainly has two components:
+
+- **AI Target Selectors** are used to determine who the mob should target.
+- **AI Goal Selectors** are used to determine what the mob should do.
+
+Let's first add an AI Target Selector to our Royal Guard by using the `AITargetSelectors` field:
+
+```yml title="/plugins/MythicMobs/Mobs/RoyalGuard.yml"
+RoyalGuard:
+  Type: SKELETON
+  Display: '&6⚔ &7Royal Guard &6⚔'
+  Health: 100
+  Damage: 10
+  Options:
+    MovementSpeed: 0.3
+    PreventOtherDrops: true
+    PreventSunburn: true
+    KnockbackResistance: 1
+  Equipment:
+  - IRON_SWORD HAND
+  - IRON_HELMET HEAD
+  - IRON_CHESTPLATE CHEST
+  - IRON_LEGGINGS LEGS
+  - IRON_BOOTS FEET
+  # highlight-start
+  AITargetSelectors:
+  - clear
+  - attacker
+  - monsters
+  # highlight-end
+  Faction: Royal
+```
+
+Here, we have added three AI Target Selectors: `clear`, `attacker`, and `monsters`:
+
+- It's always a good idea to start with the `clear` AI Target Selector, which will clear any existing AI Target Selectors which the vanilla AI may have added.
+- Next, we added the `attacker` AI Target Selector, which will make the mob attack whoever is attacking it.
+- Finally, we added the `monsters` AI Target Selector, which will make the mob attack any monsters it sees.
+
+Notice how we added the `attacker` AI Target Selector before the `otherfactionmonsters` AI Target Selector.
+AI Selectors have a **priority** which determines the order in which they are checked.
+This means that the mob will prioritize the entity that attacks it over other monsters.
+
+However, the problem now is that the mob will attack any monster it sees, including other Royal Guards.
+To fix that, we can use a new AI Target Selector called `otherfactionmonsters` which will make the mob attack any monsters it sees, as long as they are not in the same faction:
+
+```yml
+AITargetSelectors:
+- clear
+- attacker
+# highlight-start
+- otherfactionmonsters
+# highlight-end
+```
+
+Done! Now our Royal Guard will attack both attackers and monsters from other factions, even though it is a skeleton.
+Next, let's assign some AI Goal Selectors to our Royal Guard by using the `AIGoalSelectors` field:
+
+```yml title="/plugins/MythicMobs/Mobs/RoyalGuard.yml"
+RoyalGuard:
+  Type: SKELETON
+  Display: '&6⚔ &7Royal Guard &6⚔'
+  Health: 100
+  Damage: 10
+  Options:
+    MovementSpeed: 0.3
+    PreventOtherDrops: true
+    PreventSunburn: true
+    KnockbackResistance: 1
+  Equipment:
+  - IRON_SWORD HAND
+  - IRON_HELMET HEAD
+  - IRON_CHESTPLATE CHEST
+  - IRON_LEGGINGS LEGS
+  - IRON_BOOTS FEET
+  # highlight-start
+  AIGoalSelectors:
+  - clear
+  - meleeattack
+  - randomstroll
+  # highlight-end
+  AITargetSelectors:
+  - clear
+  - attacker
+  - monsters
+  Faction: Royal
+```
+
+Let's break it down again:
+
+- We added the `clear` AI Goal Selector to clear any existing AI Goal Selectors.
+- Next, we added the `meleeattack` AI Goal Selector, which will make the mob use melee attacks against its target.
+- Finally, we added the `randomstroll` AI Goal Selector, which will make the mob randomly wander around when it has no target.
+
+With that, we have created a basic AI for our Royal Guard.
+
+Let's do the same for our Demonic Mage:
+
+```yml title="/plugins/MythicMobs/Mobs/DemonicMage.yml"
+DemonicMage:
+  Type: SKELETON
+  Display: "&4☠ &7Demonic Mage &4☠"
+  Health: 100
+  Damage: 10
+  Options:
+    MovementSpeed: 0.3
+    PreventOtherDrops: true
+    PreventSunburn: true
+    KnockbackResistance: 1
+  Equipment:
+  - BLAZE_ROD HAND
+  - LEATHER_HELMET HEAD
+  - LEATHER_CHESTPLATE CHEST
+  - LEATHER_LEGGINGS LEGS
+  - LEATHER_BOOTS FEET
+  # highlight-start
+  AIGoalSelectors:
+  - clear
+  - meleeattack
+  - randomstroll
+  AITargetSelectors:
+  - clear
+  - attacker
+  - players
+  - villagers
+  - golems
+  # highlight-end
+  Skills:
+  - effect:particles{p=flame;hS=0.25;vS=0.5;amount=10} @selfLocation{yoffset=1} ~onTimer:5
+  - skill{skill=DemonicMageFireball} ~onTimer:20 0.5
+  Faction: Demon
+  Drops:
+  - DemonicMageDrops
+```
+
+Once again, let's break it down:
+
+- The AI Goal selectors are the same as the Royal Guard's.
+- The AI Target selectors are different, however. We added the `players`, `villagers`, and `golems` AI Target Selectors, which will make the mob attack players, villagers, and iron golems, respectively.
+
+## Conclusion
+
+Test it out! Spawn a Royal Guard and a Demonic Mage and they should start fighting each other.
+Custom AI is a very powerful feature and can be used to create many interesting interactions between mobs.
+
+### Quiz
+
+<QuizGrid>
+
+<Quiz
+    question="What is the purpose of factions?"
+    answers={[
+        "To make MythicMobs compatible with Factions plugins",
+        "To group mobs together",
+        "To improve performance",
+    ]}
+    correctAnswer={1}
+    explanation={
+        <>
+            Factions are a way to group mobs together.
+            When used in conjuction with Custom AI, they can be used to create interesting interactions between mobs.
+        </>
+    }
+/>
+
+</QuizGrid>
+
+### Full Code
+
+```yml title="/plugins/MythicMobs/Mobs/RoyalGuard.yml"
+RoyalGuard:
+  Type: SKELETON
+  Display: '&6⚔ &7Royal Guard &6⚔'
+  Health: 100
+  Damage: 10
+  Options:
+    MovementSpeed: 0.3
+    PreventOtherDrops: true
+    PreventSunburn: true
+    KnockbackResistance: 1
+  Equipment:
+  - IRON_SWORD HAND
+  - IRON_HELMET HEAD
+  - IRON_CHESTPLATE CHEST
+  - IRON_LEGGINGS LEGS
+  - IRON_BOOTS FEET
+  AIGoalSelectors:
+  - clear
+  - meleeattack
+  - randomstroll
+  AITargetSelectors:
+  - clear
+  - attacker
+  - monsters
+  Faction: Royal
+```
+
+```yml title="/plugins/MythicMobs/Mobs/DemonicMage.yml"
+DemonicMage:
+  Type: SKELETON
+  Display: "&4☠ &7Demonic Mage &4☠"
+  Health: 100
+  Damage: 10
+  Options:
+    MovementSpeed: 0.3
+    PreventOtherDrops: true
+    PreventSunburn: true
+    KnockbackResistance: 1
+  Equipment:
+  - BLAZE_ROD HAND
+  - LEATHER_HELMET HEAD
+  - LEATHER_CHESTPLATE CHEST
+  - LEATHER_LEGGINGS LEGS
+  - LEATHER_BOOTS FEET
+  AIGoalSelectors:
+  - clear
+  - meleeattack
+  - randomstroll
+  AITargetSelectors:
+  - clear
+  - attacker
+  - players
+  - villagers
+  - golems
+  Skills:
+  - effect:particles{p=flame;hS=0.25;vS=0.5;amount=10} @selfLocation{yoffset=1} ~onTimer:5
+  - skill{skill=DemonicMageFireball} ~onTimer:20 0.5
+  Faction: Demon
+  Drops:
+  - DemonicMageDrops
+```
